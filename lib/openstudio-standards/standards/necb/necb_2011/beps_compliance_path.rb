@@ -119,7 +119,7 @@ class NECB2011
         end
 
         # set fraction radiant  ##
-        definition.setFractionRadiant(0.3)
+        definition.setFractionRadiant(get_standards_constant('radiant_fraction'))
 
         # Clothing schedule for thermal comfort metrics
         clothing_sch = space_type.model.getScheduleRulesetByName('Clothing Schedule')
@@ -129,7 +129,12 @@ class NECB2011
           clothing_sch = OpenStudio::Model::ScheduleRuleset.new(space_type.model)
           clothing_sch.setName('Clothing Schedule')
           clothing_sch.defaultDaySchedule.setName('Clothing Schedule Default Winter Clothes')
-          clothing_sch.defaultDaySchedule.addValue(OpenStudio::Time.new(0, 24, 0, 0), 1.0)
+          clothing_sch.defaultDaySchedule.addValue(OpenStudio::Time.new(  get_standards_constant('default_clothing_schedule_day'),
+                                                                          get_standards_constant('default_clothing_schedule_hour'),
+                                                                          get_standards_constant('default_clothing_schedule_minute'),
+                                                                          get_standards_constant('default_clothing_schedule_seconds')
+                                                                        ),
+                                                   get_standards_constant('default_clothing_schedule_fraction'))
           sch_rule = OpenStudio::Model::ScheduleRule.new(clothing_sch)
           sch_rule.daySchedule.setName('Clothing Schedule Summer Clothes')
           sch_rule.daySchedule.addValue(OpenStudio::Time.new(0, 24, 0, 0), 0.5)
