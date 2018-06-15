@@ -109,6 +109,86 @@
       "value": 0.05,
       "units": "",
       "notes": ""
+    },
+    {
+      "name": "get_necb_hdd18_max_distance_tolerance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 500000,
+      "units": "km",
+      "notes": "for get_necb_hdd18 method in necb_2011.rb"
+    },
+    {
+      "name": "earth_radius",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 6371,
+      "units": "km",
+      "notes": "for distance method in necb_2011.rb"
+    },
+    {
+      "name": "unmet_hours_tolerance_for_heating_setpoint",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 1,
+      "units": "",
+      "notes": "for build_prototype_model method in necb_2011.rb"
+    },
+    {
+      "name": "unmet_hours_tolerance_for_cooling_setpoint",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 1,
+      "units": "",
+      "notes": "for build_prototype_model method in necb_2011.rb"
+    },
+    {
+      "name": "occsens_lpd_storage_max_area_limit",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 100,
+      "units": "m2",
+      "notes": "for set_occ_sensor_spacetypes method in necb_2011.rb"
+    },
+    {
+      "name": "occsens_lpd_storage_refrigerated_max_area_limit",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 100,
+      "units": "m2",
+      "notes": "for set_occ_sensor_spacetypes method in necb_2011.rb"
+    },
+    {
+      "name": "occsens_lpd_hospital_med_sup_max_area_limit",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 100,
+      "units": "m2",
+      "notes": "for set_occ_sensor_spacetypes method in necb_2011.rb"
+    },
+    {
+      "name": "occsens_lpd_office_enc_max_area_limit",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 25,
+      "units": "m2",
+      "notes": "for set_occ_sensor_spacetypes method in necb_2011.rb"
     }
   ]
 }

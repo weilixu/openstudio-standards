@@ -94,7 +94,7 @@ class NECB2011 < Standard
   # Enter in [latitude, longitude] for each loc and this method will return the distance.
   def distance(loc1, loc2)
     rad_per_deg = Math::PI/180 # PI / 180
-    rkm = 6371 # Earth radius in kilometers
+    rkm = self.get_standards_constant("earth_radius") # Earth radius in kilometers
     rm = rkm * 1000 # Radius in meters
 
     dlat_rad = (loc2[0]-loc1[0]) * rad_per_deg # Delta, converted to rad
@@ -118,7 +118,7 @@ class NECB2011 < Standard
   end
 
   def get_necb_hdd18(model)
-    max_distance_tolerance = 500000
+    max_distance_tolerance = self.get_standards_constant("get_necb_hdd18_max_distance_tolerance")
     min_distance = 100000000000000.0
     necb_closest = nil
     epw = BTAP::Environment::WeatherFile.new(model.weatherFile.get.path.get)
@@ -188,8 +188,8 @@ class NECB2011 < Standard
     model_apply_sizing_parameters(model)
 
     # set a larger tolerance for unmet hours from default 0.2 to 1.0C
-    model.getOutputControlReportingTolerances.setToleranceforTimeHeatingSetpointNotMet(1.0)
-    model.getOutputControlReportingTolerances.setToleranceforTimeCoolingSetpointNotMet(1.0)
+    model.getOutputControlReportingTolerances.setToleranceforTimeHeatingSetpointNotMet(self.get_standards_constant("unmet_hours_tolerance_for_heating_setpoint"))
+    model.getOutputControlReportingTolerances.setToleranceforTimeCoolingSetpointNotMet(self.get_standards_constant("unmet_hours_tolerance_for_cooling_setpoint"))
     if model_run_sizing_run(model, "#{sizing_run_dir}/SR1") == false
       raise("sizing run 1 failed!")
     end
@@ -427,10 +427,10 @@ class NECB2011 < Standard
         # Check if space type for this space matches NECB2011 specific space type
         # for occupancy sensor that is area dependent. Note: space.floorArea in m2.
 
-        if (space_type_name == 'Storage area' && space.floorArea < 100) ||
-            (space_type_name == 'Storage area - refrigerated' && space.floorArea < 100) ||
-            (space_type_name == 'Hospital - medical supply' && space.floorArea < 100) ||
-            (space_type_name == 'Office - enclosed' && space.floorArea < 25)
+        if (space_type_name == 'Storage area' && space.floorArea < self.get_standards_constant('occsens_lpd_storage_max_area_limit')) ||
+            (space_type_name == 'Storage area - refrigerated' && space.floorArea < self.get_standards_constant('occsens_lpd_storage_refrigerated_max_area_limit')) ||
+            (space_type_name == 'Hospital - medical supply' && space.floorArea < self.get_standards_constant('occsens_lpd_hospital_med_sup_max_area_limit')) ||
+            (space_type_name == 'Office - enclosed' && space.floorArea < self.get_standards_constant('occsens_lpd_office_enc_max_area_limit'))
           # If there is only one space assigned to this space type, then reassign this stub
           # to the @@template duplicate with appendage " - occsens", otherwise create a new stub
           # for this space. Required to use reduced LPD by NECB2011 0.9 factor.
