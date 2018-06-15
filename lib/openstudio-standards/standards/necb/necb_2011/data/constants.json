@@ -251,6 +251,58 @@
       "value": 1.0,
       "units": "fraction",
       "notes": "for space_type_apply_internal_loads method in beps_compliance_path.rb"
+    },
+
+
+    {
+      "name": "summer_clothing_schedule_day",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0,
+      "units": "integer",
+      "notes": "for space_type_apply_internal_loads method in beps_compliance_path.rb"
+    },
+    {
+      "name": "summer_clothing_schedule_hour",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 24,
+      "units": "hr",
+      "notes": "for space_type_apply_internal_loads method in beps_compliance_path.rb"
+    },
+    {
+      "name": "summer_clothing_schedule_minute",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0,
+      "units": "min",
+      "notes": "for space_type_apply_internal_loads method in beps_compliance_path.rb"
+    },
+    {
+      "name": "summer_clothing_schedule_seconds",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0,
+      "units": "s",
+      "notes": "for space_type_apply_internal_loads method in beps_compliance_path.rb"
+    },
+    {
+      "name": "summer_clothing_schedule_fraction",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "fraction",
+      "notes": "for space_type_apply_internal_loads method in beps_compliance_path.rb"
     }
   ]
 }
