@@ -129,25 +129,25 @@ class NECB2011
           clothing_sch = OpenStudio::Model::ScheduleRuleset.new(space_type.model)
           clothing_sch.setName('Clothing Schedule')
           clothing_sch.defaultDaySchedule.setName('Clothing Schedule Default Winter Clothes')
-          clothing_sch.defaultDaySchedule.addValue(OpenStudio::Time.new(  get_standards_constant('default_clothing_schedule_day'),
-                                                                          get_standards_constant('default_clothing_schedule_hour'),
-                                                                          get_standards_constant('default_clothing_schedule_minute'),
-                                                                          get_standards_constant('default_clothing_schedule_seconds')
+          clothing_sch.defaultDaySchedule.addValue(OpenStudio::Time.new(  self.get_standards_constant('default_clothing_schedule_day'),
+                                                                          self.get_standards_constant('default_clothing_schedule_hour'),
+                                                                          self.get_standards_constant('default_clothing_schedule_minute'),
+                                                                          self.get_standards_constant('default_clothing_schedule_seconds')
                                                                         ),
-                                                   get_standards_constant('default_clothing_schedule_fraction'))
+                                                   self.get_standards_constant('default_clothing_schedule_fraction'))
           sch_rule = OpenStudio::Model::ScheduleRule.new(clothing_sch)
           sch_rule.daySchedule.setName('Clothing Schedule Summer Clothes')
-          sch_rule.daySchedule.addValue(OpenStudio::Time.new(  get_standards_constant('summer_clothing_schedule_day'),
-                                                               get_standards_constant('summer_clothing_schedule_hour'),
-                                                               get_standards_constant('summer_clothing_schedule_minute'),
-                                                               get_standards_constant('summer_clothing_schedule_seconds')
+          sch_rule.daySchedule.addValue(OpenStudio::Time.new(  self.get_standards_constant('summer_clothing_schedule_day'),
+                                                               self.get_standards_constant('summer_clothing_schedule_hour'),
+                                                               self.get_standards_constant('summer_clothing_schedule_minute'),
+                                                               self.get_standards_constant('summer_clothing_schedule_seconds')
                                                             ),
-                                        get_standards_constant('summer_clothing_schedule_fraction'))
-          sch_rule.setStartDate(OpenStudio::Date.new(OpenStudio::MonthOfYear.new(get_standards_constant('summer_clothing_schedule_start_date_month')),
-                                                                                 get_standards_constant('summer_clothing_schedule_start_date_day')))
+                                        self.get_standards_constant('summer_clothing_schedule_fraction'))
+          sch_rule.setStartDate(OpenStudio::Date.new(OpenStudio::MonthOfYear.new(self.get_standards_constant('summer_clothing_schedule_start_date_month')),
+                                                                                 self.get_standards_constant('summer_clothing_schedule_start_date_day')))
 
-          sch_rule.setEndDate(OpenStudio::Date.new(OpenStudio::MonthOfYear.new(get_standards_constant('summer_clothing_schedule_end_date_month')),
-                                                                               get_standards_constant('summer_clothing_schedule_end_date_day')))
+          sch_rule.setEndDate(OpenStudio::Date.new(OpenStudio::MonthOfYear.new(self.get_standards_constant('summer_clothing_schedule_end_date_month')),
+                                                                               self.get_standards_constant('summer_clothing_schedule_end_date_day')))
         end
         inst.setClothingInsulationSchedule(clothing_sch)
 
@@ -159,12 +159,12 @@ class NECB2011
           air_velo_sch = OpenStudio::Model::ScheduleRuleset.new(space_type.model)
           air_velo_sch.setName('Air Velocity Schedule')
           air_velo_sch.defaultDaySchedule.setName('Air Velocity Schedule Default')
-          air_velo_sch.defaultDaySchedule.addValue(OpenStudio::Time.new(  get_standards_constant('default_air_velocity_schedule_day'),
-                                                                          get_standards_constant('default_air_velocity_schedule_hour'),
-                                                                          get_standards_constant('default_air_velocity_schedule_minute'),
-                                                                          get_standards_constant('default_air_velocity_schedule_seconds')
+          air_velo_sch.defaultDaySchedule.addValue(OpenStudio::Time.new(  self.get_standards_constant('default_air_velocity_schedule_day'),
+                                                                          self.get_standards_constant('default_air_velocity_schedule_hour'),
+                                                                          self.get_standards_constant('default_air_velocity_schedule_minute'),
+                                                                          self.get_standards_constant('default_air_velocity_schedule_seconds')
                                                                        ),
-                                                   get_standards_constant('default_air_velocity_schedule_fraction'))
+                                                   self.get_standards_constant('default_air_velocity_schedule_fraction'))
         end
         inst.setAirVelocitySchedule(air_velo_sch)
 
@@ -176,12 +176,12 @@ class NECB2011
           work_efficiency_sch = OpenStudio::Model::ScheduleRuleset.new(space_type.model)
           work_efficiency_sch.setName('Work Efficiency Schedule')
           work_efficiency_sch.defaultDaySchedule.setName('Work Efficiency Schedule Default')
-          work_efficiency_sch.defaultDaySchedule.addValue(OpenStudio::Time.new(  get_standards_constant('default_work_efficiency_schedule_day'),
-                                                                                 get_standards_constant('default_work_efficiency_schedule_hour'),
-                                                                                 get_standards_constant('default_work_efficiency_schedule_minute'),
-                                                                                 get_standards_constant('default_work_efficiency_schedule_seconds')
+          work_efficiency_sch.defaultDaySchedule.addValue(OpenStudio::Time.new(  self.get_standards_constant('default_work_efficiency_schedule_day'),
+                                                                                 self.get_standards_constant('default_work_efficiency_schedule_hour'),
+                                                                                 self.get_standards_constant('default_work_efficiency_schedule_minute'),
+                                                                                 self.get_standards_constant('default_work_efficiency_schedule_seconds')
                                                                               ),
-                                                          get_standards_constant('default_work_efficiency_schedule_fraction'))
+                                                          self.get_standards_constant('default_work_efficiency_schedule_fraction'))
         end
         inst.setWorkEfficiencySchedule(work_efficiency_sch)
       end

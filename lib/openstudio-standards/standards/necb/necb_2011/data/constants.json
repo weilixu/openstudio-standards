@@ -447,6 +447,145 @@
       "value": 0,
       "units": "fraction",
       "notes": "for space_type_apply_internal_loads method in beps_compliance_path.rb"
+    },
+
+
+    {
+      "name": "wwr_limit",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 40.0,
+      "units": "ratio",
+      "notes": "window to wall ratio limit for apply_standard_window_to_wall_ratio method in building_envelope.rb"
+    },
+
+
+    {
+      "name": "default_almost_adiabatic_thermal_resistance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 500,
+      "units": "K.m/W",
+      "notes": "for model_find_and_add_construction method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "default_almost_adiabatic_roughness",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "Smooth",
+      "units": "string",
+      "notes": "for model_find_and_add_construction method in building_envelope.rb"
+    },
+
+
+
+    {
+      "name": "CP02_carpet_pad_roughness",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "VeryRough",
+      "units": "string",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb"
+    },
+    {
+      "name": "CP02_carpet_pad_thermal_resistance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.21648,
+      "units": "K.m/W",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "CP02_carpet_pad_thermal_absorptance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.9,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "CP02_carpet_pad_solar_absorptance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.7,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "CP02_carpet_pad_visible_absorptance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.8,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+
+
+    {
+      "name": "100mm_normalweight_concrete_floor_roughness",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "MediumSmooth",
+      "units": "string",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb"
+    },
+    {
+      "name": "100mm_normalweight_concrete_floor_thickness",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.1016,
+      "units": "m",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "100mm_normalweight_concrete_floor_conductivity",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 2.31,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "100mm_normalweight_concrete_floor_density",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 2322,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "100mm_normalweight_concrete_floor_specific_heat",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 832,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
     }
   ]
 }

@@ -101,7 +101,7 @@ class NECB2011
     OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.Model', "WWR Semiheated = #{wwr_sh.round}%; window = #{sh_wind_ft2.round} ft2, wall = #{sh_wall_ft2.round} ft2.")
 
     # WWR limit
-    wwr_lim = 40.0
+    wwr_lim = self.get_standards_constant('wwr_limit')
 
     # Check against WWR limit
     red_nr = wwr_nr > wwr_lim
@@ -671,7 +671,8 @@ class NECB2011
       # Return an empty construction
       construction = OpenStudio::Model::Construction.new(model)
       construction.setName('Could not find construction properties set to Adiabatic ')
-      almost_adiabatic = OpenStudio::Model::MasslessOpaqueMaterial.new(model, 'Smooth', 500)
+      almost_adiabatic = OpenStudio::Model::MasslessOpaqueMaterial.new(model, self.get_standards_constant('default_almost_adiabatic_roughness'), # 'Smooth'
+                                                                       self.get_standards_constant('default_almost_adiabatic_thermal_resistance')) #500 units
       construction.insertLayer(0, almost_adiabatic)
       return construction
     else
@@ -697,19 +698,19 @@ class NECB2011
   def assign_contruction_to_adiabatic_surfaces(model)
     cp02_carpet_pad = OpenStudio::Model::MasslessOpaqueMaterial.new(model)
     cp02_carpet_pad.setName('CP02 CARPET PAD')
-    cp02_carpet_pad.setRoughness('VeryRough')
-    cp02_carpet_pad.setThermalResistance(0.21648)
-    cp02_carpet_pad.setThermalAbsorptance(0.9)
-    cp02_carpet_pad.setSolarAbsorptance(0.7)
-    cp02_carpet_pad.setVisibleAbsorptance(0.8)
+    cp02_carpet_pad.setRoughness(self.get_standards_constant('CP02_carpet_pad_roughness'))
+    cp02_carpet_pad.setThermalResistance(self.get_standards_constant('CP02_carpet_pad_thermal_resistance'))
+    cp02_carpet_pad.setThermalAbsorptance(self.get_standards_constant('CP02_carpet_pad_thermal_absorptance'))
+    cp02_carpet_pad.setSolarAbsorptance(self.get_standards_constant('CP02_carpet_pad_solar_absorptance'))
+    cp02_carpet_pad.setVisibleAbsorptance(self.get_standards_constant('CP02_carpet_pad_visible_absorptance'))
 
     normalweight_concrete_floor = OpenStudio::Model::StandardOpaqueMaterial.new(model)
     normalweight_concrete_floor.setName('100mm Normalweight concrete floor')
-    normalweight_concrete_floor.setRoughness('MediumSmooth')
-    normalweight_concrete_floor.setThickness(0.1016)
-    normalweight_concrete_floor.setConductivity(2.31)
-    normalweight_concrete_floor.setDensity(2322)
-    normalweight_concrete_floor.setSpecificHeat(832)
+    normalweight_concrete_floor.setRoughness(self.get_standards_constant('100mm_normalweight_concrete_floor_roughness'))
+    normalweight_concrete_floor.setThickness(self.get_standards_constant('100mm_normalweight_concrete_floor_thickness'))
+    normalweight_concrete_floor.setConductivity(self.get_standards_constant('100mm_normalweight_concrete_floor_conductivity'))
+    normalweight_concrete_floor.setDensity(self.get_standards_constant('100mm_normalweight_concrete_floor_density'))
+    normalweight_concrete_floor.setSpecificHeat(self.get_standards_constant('100mm_normalweight_concrete_floor_specific_heat'))
 
     nonres_floor_insulation = OpenStudio::Model::MasslessOpaqueMaterial.new(model)
     nonres_floor_insulation.setName('Nonres_Floor_Insulation')
