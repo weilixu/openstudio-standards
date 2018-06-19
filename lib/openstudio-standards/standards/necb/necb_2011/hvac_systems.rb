@@ -461,7 +461,7 @@ class NECB2011
         boiler_hot_water.setBoilerFlowMode('LeavingSetpointModulated')
         boiler_hot_water.setMinimumPartLoadRatio(get_standards_constant('boiler_minimum_part_load_ratio')) #0.25
       elsif boiler_hot_water.name.to_s.include?('Secondary Boiler')
-        boiler_capacity = 0.001
+        boiler_capacity = get_standards_constant('secondary_boiler_capacity_during_high_load') #0.001
       end
     #elsif ((capacity_w / 1000.0) >= 176.0) && ((capacity_w / 1000.0) < 352.0)
     elsif ((capacity_w / 1000.0) >= get_standards_constant('capacity_boiler_limit_lower')) && ((capacity_w / 1000.0) < get_standards_constant('capacity_boiler_limit_upper'))
@@ -470,7 +470,7 @@ class NECB2011
       if boiler_hot_water.name.to_s.include?('Primary Boiler')
         boiler_capacity = capacity_w
       elsif boiler_hot_water.name.to_s.include?('Secondary Boiler')
-        boiler_capacity = 0.001
+        boiler_capacity = get_standards_constant('secondary_boiler_capacity_during_low_load') #0.001
       end
     end
     boiler_hot_water.setNominalCapacity(boiler_capacity)
@@ -550,14 +550,14 @@ class NECB2011
     capacity_w = chiller_electric_eir_find_capacity(chiller_electric_eir)
 
     # All chillers must be modulating down to 25% of their capacity
-    chiller_electric_eir.setChillerFlowMode('LeavingSetpointModulated')
-    chiller_electric_eir.setMinimumPartLoadRatio(0.25)
-    chiller_electric_eir.setMinimumUnloadingRatio(0.25)
-    if (capacity_w / 1000.0) < 2100.0
+    chiller_electric_eir.setChillerFlowMode(get_standards_constant('chiller_electric_eir_chiller_flow_mode'))# 'LeavingSetpointModulated'
+    chiller_electric_eir.setMinimumPartLoadRatio(get_standards_constant('chiller_electric_eir_minimum_part_load_ratio')) #0.25
+    chiller_electric_eir.setMinimumUnloadingRatio(get_standards_constant('chiller_electric_eir_minimum_unloading_ratio')) #0.25
+    if (capacity_w / 1000.0) < get_standards_constant('chiller_electric_eir_step_limit_capacity') #2100.0
       if chiller_electric_eir.name.to_s.include? 'Primary Chiller'
         chiller_capacity = capacity_w
       elsif chiller_electric_eir.name.to_s.include? 'Secondary Chiller'
-        chiller_capacity = 0.001
+        chiller_capacity = get_standards_constant('secondary_chiller_electric_eir_capacity_min') #0.001
       end
     else
       chiller_capacity = capacity_w / 2.0
@@ -619,12 +619,12 @@ class NECB2011
     if chiller_electric_eir.name.to_s.include? 'Primary Chiller'
       # Single speed tower model assumes 25% extra for compressor power
       tower_cap = capacity_w * (1.0 + 1.0 / chiller_electric_eir.referenceCOP)
-      if (tower_cap / 1000.0) < 1750
+      if (tower_cap / 1000.0) < get_standards_constant('primary_chiller_electric_eir_capacity_step_value') #1750
         clg_tower_objs[0].setNumberofCells(1)
       else
-        clg_tower_objs[0].setNumberofCells((tower_cap / (1000 * 1750) + 0.5).round)
+        clg_tower_objs[0].setNumberofCells((tower_cap / (1000 * get_standards_constant('primary_chiller_electric_eir_capacity_step_value')) + 0.5).round)
       end
-      clg_tower_objs[0].setFanPoweratDesignAirFlowRate(0.015 * tower_cap)
+      clg_tower_objs[0].setFanPoweratDesignAirFlowRate(get_standards_constant('primary_chiller_electric_fan_power_at_design_air_flow_rate_multiplier') * tower_cap) #0.015
     end
 
     # Append the name with size and kw/ton
@@ -711,7 +711,7 @@ class NECB2011
 
     # Set number of stages
     stage_cap = []
-    num_stages = (capacity_w / (66.0 * 1000.0) + 0.5).round
+    num_stages = (capacity_w / (get_standards_constant('coil_cooling_dx_multi_stage_capacity_limit') * 1000.0) + 0.5).round
     num_stages = [num_stages, 4].min
     if num_stages == 1
       stage_cap[0] = capacity_w / 2.0
@@ -719,7 +719,7 @@ class NECB2011
       stage_cap[2] = stage_cap[1] + 0.1
       stage_cap[3] = stage_cap[2] + 0.1
     else
-      stage_cap[0] = 66.0 * 1000.0
+      stage_cap[0] = get_standards_constant('coil_cooling_dx_multi_stage_capacity_limit') * 1000.0
       stage_cap[1] = 2.0 * stage_cap[0]
       if num_stages == 2
         stage_cap[2] = stage_cap[1] + 0.1
@@ -818,8 +818,8 @@ class NECB2011
     if coil_dx_subcategory(coil_cooling_dx_multi_speed) == 'PTAC'
       ptac_eer_coeff_1 = ac_props['ptac_eer_coefficient_1']
       ptac_eer_coeff_2 = ac_props['ptac_eer_coefficient_2']
-      capacity_btu_per_hr = 7000 if capacity_btu_per_hr < 7000
-      capacity_btu_per_hr = 15_000 if capacity_btu_per_hr > 15_000
+      capacity_btu_per_hr = get_standards_constant('PTAC_capacity_btu_per_hr_minimum_limit') if capacity_btu_per_hr < get_standards_constant('PTAC_capacity_btu_per_hr_minimum_limit') #7000
+      capacity_btu_per_hr = get_standards_constant('PTAC_capacity_btu_per_hr_maximum_limit') if capacity_btu_per_hr > get_standards_constant('PTAC_capacity_btu_per_hr_maximum_limit') #15_000
       ptac_eer = ptac_eer_coeff_1 + (ptac_eer_coeff_2 * capacity_btu_per_hr)
       cop = eer_to_cop(ptac_eer)
       # self.setName("#{self.name} #{capacity_kbtu_per_hr.round}kBtu/hr #{ptac_eer}EER")
@@ -895,7 +895,7 @@ class NECB2011
     end
 
     # Set number of stages
-    num_stages = (capacity_w / (66.0 * 1000.0) + 0.5).round
+    num_stages = (capacity_w / (get_standards_constant('coil_heating_gas_multi_stage_capacity_limit') * 1000.0) + 0.5).round #66.0
     num_stages = [num_stages, 4].min
     stage_cap = []
     if num_stages == 1
@@ -904,7 +904,7 @@ class NECB2011
       stage_cap[2] = stage_cap[1] + 0.1
       stage_cap[3] = stage_cap[2] + 0.1
     else
-      stage_cap[0] = 66.0 * 1000.0
+      stage_cap[0] = get_standards_constant('coil_heating_gas_multi_stage_capacity_limit') * 1000.0  #66.0
       stage_cap[1] = 2.0 * stage_cap[0]
       if num_stages == 2
         stage_cap[2] = stage_cap[1] + 0.1

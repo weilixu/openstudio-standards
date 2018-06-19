@@ -1092,6 +1092,146 @@
       "value": 176.6,
       "units": "kw",
       "notes": "for boiler_hot_water_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+    {
+      "name": "secondary_boiler_capacity_during_high_load",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.001,
+      "units": "w",
+      "notes": "for boiler_hot_water_apply_efficiency_and_curves method in hvac_systems.rb. The capacity applies when the capacity >= `capacity_boiler_limit_upper`"
+    },
+    {
+      "name": "secondary_boiler_capacity_during_low_load",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.001,
+      "units": "w",
+      "notes": "for boiler_hot_water_apply_efficiency_and_curves method in hvac_systems.rb. The capacity applies when the capacity is <= `capacity_boiler_limit_lower`"
+    },
+
+
+
+    {
+      "name": "chiller_electric_eir_chiller_flow_mode",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "LeavingSetpointModulated",
+      "units": "string",
+      "notes": "for chiller_electric_eir_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+    {
+      "name": "chiller_electric_eir_minimum_part_load_ratio",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.25,
+      "units": "fraction",
+      "notes": "for chiller_electric_eir_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+    {
+      "name": "chiller_electric_eir_minimum_unloading_ratio",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.25,
+      "units": "fraction",
+      "notes": "for chiller_electric_eir_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+    {
+      "name": "chiller_electric_eir_step_limit_capacity",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 2100.0,
+      "units": "kw",
+      "notes": "for chiller_electric_eir_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+    {
+      "name": "secondary_chiller_electric_eir_capacity_min",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.001,
+      "units": "w",
+      "notes": "for chiller_electric_eir_apply_efficiency_and_curves method in hvac_systems.rb. Applies when capacity <= `chiller_electric_eir_step_limit_capacity`"
+    },
+    {
+      "name": "primary_chiller_electric_eir_capacity_step_value",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 1750,
+      "units": "kw",
+      "notes": "for chiller_electric_eir_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+    {
+      "name": "primary_chiller_electric_fan_power_at_design_air_flow_rate_multiplier",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.015,
+      "units": "",
+      "notes": "for chiller_electric_eir_apply_efficiency_and_curves method in hvac_systems.rb. this multiplies the tower_cap to determine cooling tower fan power"
+    },
+
+
+
+    {
+      "name": "coil_cooling_dx_multi_stage_capacity_limit",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 66.0,
+      "units": "kw",
+      "notes": "for coil_cooling_dx_multi_speed_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+    {
+      "name": "PTAC_capacity_btu_per_hr_minimum_limit",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 7000,
+      "units": "BTU/hr",
+      "notes": "for coil_cooling_dx_multi_speed_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+    {
+      "name": "PTAC_capacity_btu_per_hr_maximum_limit",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 15000,
+      "units": "BTU/hr",
+      "notes": "for coil_cooling_dx_multi_speed_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+
+
+
+    {
+      "name": "coil_heating_gas_multi_stage_capacity_limit",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 66.0,
+      "units": "kw",
+      "notes": "for coil_heating_gas_multi_stage_apply_efficiency_and_curves method in hvac_systems.rb."
     }
   ]
+}
 }
