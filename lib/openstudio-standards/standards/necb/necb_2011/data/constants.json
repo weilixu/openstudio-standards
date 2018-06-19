@@ -586,6 +586,215 @@
       "value": 832,
       "units": "",
       "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+
+
+
+    {
+      "name": "nonres_floor_insulation_roughness",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "MediumSmooth",
+      "units": "string",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb"
+    },
+    {
+      "name": "nonres_floor_insulation_thermal_resistance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 2.88291975297193,
+      "units": "K.m/W",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "nonres_floor_insulation_thermal_absorptance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.9,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "nonres_floor_insulation_solar_absorptance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.7,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "nonres_floor_insulation_visible_absorptance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.7,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+
+
+    {
+      "name": "G01_13mm_gypsum_board_roughness",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "Smooth",
+      "units": "string",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb"
+    },
+    {
+      "name": "G01_13mm_gypsum_board_thickness",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.0127,
+      "units": "m",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "G01_13mm_gypsum_board_conductivity",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.1600,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "G01_13mm_gypsum_board_density",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 800,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "G01_13mm_gypsum_board_specific_heat",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 1090,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "G01_13mm_gypsum_board_thermal_absorptance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.9,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "G01_13mm_gypsum_board_solar_absorptance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.7,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "G01_13mm_gypsum_board_visible_absorptance",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+
+
+    {
+      "name": "M10_200mm_concrete_block_basement_wall_roughness",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "MediumRough",
+      "units": "string",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb"
+    },
+    {
+      "name": "M10_200mm_concrete_block_basement_wall_thickness",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.2032,
+      "units": "m",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "M10_200mm_concrete_block_basement_wall_conductivity",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 1.326,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "M10_200mm_concrete_block_basement_wall_density",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 1842,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+    {
+      "name": "M10_200mm_concrete_block_basement_wall_specific_heat",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 912,
+      "units": "",
+      "notes": "for assign_contruction_to_adiabatic_surfaces method in building_envelope.rb. Not sure about units."
+    },
+
+
+    {
+      "name": "is_radiant_conductance_value_multiplier_for_outsideBoundary_not_outdoors",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.80,
+      "units": "fraction",
+      "notes": "for set_necb_external_surface_conductance method in building_envelope.rb."
+    },
+    {
+      "name": "is_radiant_conductance_value_multiplier_for_outsideBoundary_ground",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.80,
+      "units": "fraction",
+      "notes": "for set_necb_external_surface_conductance method in building_envelope.rb."
     }
   ]
 }

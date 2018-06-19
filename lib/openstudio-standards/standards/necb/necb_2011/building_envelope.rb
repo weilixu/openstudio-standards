@@ -354,7 +354,7 @@ class NECB2011
           conductance_value = @standards_data['conductances']['Roof'].find {|i| i['hdd'] > hdd}['thermal_transmittance'] * scaling_factor
       end
       if is_radiant
-        conductance_value *= 0.80
+        conductance_value *= get_standards_constant('is_radiant_conductance_value_multiplier_for_outsideBoundary_not_outdoors')#0.80
       end
       return BTAP::Geometry::Surfaces.set_surfaces_construction_conductance([surface], conductance_value)
     end
@@ -369,7 +369,7 @@ class NECB2011
           conductance_value = @standards_data['conductances']['GroundRoof'].find {|i| i['hdd'] > hdd}['thermal_transmittance'] * scaling_factor
       end
       if is_radiant
-        conductance_value *= 0.80
+        conductance_value *= get_standards_constant('is_radiant_conductance_value_multiplier_for_outsideBoundary_ground')#0.80
       end
       return BTAP::Geometry::Surfaces.set_surfaces_construction_conductance([surface], conductance_value)
     end
@@ -672,7 +672,7 @@ class NECB2011
       construction = OpenStudio::Model::Construction.new(model)
       construction.setName('Could not find construction properties set to Adiabatic ')
       almost_adiabatic = OpenStudio::Model::MasslessOpaqueMaterial.new(model, self.get_standards_constant('default_almost_adiabatic_roughness'), # 'Smooth'
-                                                                       self.get_standards_constant('default_almost_adiabatic_thermal_resistance')) #500 units
+                                                                              self.get_standards_constant('default_almost_adiabatic_thermal_resistance')) #500 units
       construction.insertLayer(0, almost_adiabatic)
       return construction
     else
@@ -714,11 +714,11 @@ class NECB2011
 
     nonres_floor_insulation = OpenStudio::Model::MasslessOpaqueMaterial.new(model)
     nonres_floor_insulation.setName('Nonres_Floor_Insulation')
-    nonres_floor_insulation.setRoughness('MediumSmooth')
-    nonres_floor_insulation.setThermalResistance(2.88291975297193)
-    nonres_floor_insulation.setThermalAbsorptance(0.9)
-    nonres_floor_insulation.setSolarAbsorptance(0.7)
-    nonres_floor_insulation.setVisibleAbsorptance(0.7)
+    nonres_floor_insulation.setRoughness(self.get_standards_constant('nonres_floor_insulation_roughness'))
+    nonres_floor_insulation.setThermalResistance(self.get_standards_constant('nonres_floor_insulation_thermal_resistance'))
+    nonres_floor_insulation.setThermalAbsorptance(self.get_standards_constant('nonres_floor_insulation_thermal_absorptance'))
+    nonres_floor_insulation.setSolarAbsorptance(self.get_standards_constant('nonres_floor_insulation_solar_absorptance'))
+    nonres_floor_insulation.setVisibleAbsorptance(self.get_standards_constant('nonres_floor_insulation_visible_absorptance'))
 
     floor_adiabatic_construction = OpenStudio::Model::Construction.new(model)
     floor_adiabatic_construction.setName('Floor Adiabatic construction')
@@ -730,14 +730,14 @@ class NECB2011
 
     g01_13mm_gypsum_board = OpenStudio::Model::StandardOpaqueMaterial.new(model)
     g01_13mm_gypsum_board.setName('G01 13mm gypsum board')
-    g01_13mm_gypsum_board.setRoughness('Smooth')
-    g01_13mm_gypsum_board.setThickness(0.0127)
-    g01_13mm_gypsum_board.setConductivity(0.1600)
-    g01_13mm_gypsum_board.setDensity(800)
-    g01_13mm_gypsum_board.setSpecificHeat(1090)
-    g01_13mm_gypsum_board.setThermalAbsorptance(0.9)
-    g01_13mm_gypsum_board.setSolarAbsorptance(0.7)
-    g01_13mm_gypsum_board.setVisibleAbsorptance(0.5)
+    g01_13mm_gypsum_board.setRoughness(self.get_standards_constant('G01_13mm_gypsum_board_roughness'))
+    g01_13mm_gypsum_board.setThickness(self.get_standards_constant('G01_13mm_gypsum_board_thickness'))
+    g01_13mm_gypsum_board.setConductivity(self.get_standards_constant('G01_13mm_gypsum_board_conductivity'))
+    g01_13mm_gypsum_board.setDensity(self.get_standards_constant('G01_13mm_gypsum_board_density'))
+    g01_13mm_gypsum_board.setSpecificHeat(self.get_standards_constant('G01_13mm_gypsum_board_specific_heat'))
+    g01_13mm_gypsum_board.setThermalAbsorptance(self.get_standards_constant('G01_13mm_gypsum_board_thermal_absorptance'))
+    g01_13mm_gypsum_board.setSolarAbsorptance(self.get_standards_constant('G01_13mm_gypsum_board_solar_absorptance'))
+    g01_13mm_gypsum_board.setVisibleAbsorptance(self.get_standards_constant('G01_13mm_gypsum_board_visible_absorptance'))
 
     wall_adiabatic_construction = OpenStudio::Model::Construction.new(model)
     wall_adiabatic_construction.setName('Wall Adiabatic construction')
@@ -748,11 +748,11 @@ class NECB2011
 
     m10_200mm_concrete_block_basement_wall = OpenStudio::Model::StandardOpaqueMaterial.new(model)
     m10_200mm_concrete_block_basement_wall.setName('M10 200mm concrete block basement wall')
-    m10_200mm_concrete_block_basement_wall.setRoughness('MediumRough')
-    m10_200mm_concrete_block_basement_wall.setThickness(0.2032)
-    m10_200mm_concrete_block_basement_wall.setConductivity(1.326)
-    m10_200mm_concrete_block_basement_wall.setDensity(1842)
-    m10_200mm_concrete_block_basement_wall.setSpecificHeat(912)
+    m10_200mm_concrete_block_basement_wall.setRoughness(self.get_standards_constant('M10_200mm_concrete_block_basement_wall_roughness'))
+    m10_200mm_concrete_block_basement_wall.setThickness(self.get_standards_constant('M10_200mm_concrete_block_basement_wall_thickness'))
+    m10_200mm_concrete_block_basement_wall.setConductivity(self.get_standards_constant('M10_200mm_concrete_block_basement_wall_conductivity'))
+    m10_200mm_concrete_block_basement_wall.setDensity(self.get_standards_constant('M10_200mm_concrete_block_basement_wall_density'))
+    m10_200mm_concrete_block_basement_wall.setSpecificHeat(self.get_standards_constant('M10_200mm_concrete_block_basement_wall_specific_heat'))
 
     basement_wall_construction = OpenStudio::Model::Construction.new(model)
     basement_wall_construction.setName('Basement Wall construction')
