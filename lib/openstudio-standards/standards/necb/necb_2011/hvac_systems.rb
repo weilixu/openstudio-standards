@@ -37,7 +37,7 @@ class NECB2011
     end
 
     # Determine the minimum capacity that requires an economizer
-    minimum_capacity_btu_per_hr = 68_243 # NECB requires economizer for cooling cap > 20 kW
+    minimum_capacity_btu_per_hr = get_standards_constant('minimum_capacity_btu_per_hr_for_cooling_cap_>_20_kW')#68_243 # NECB requires economizer for cooling cap > 20 kW
 
     # Check whether the system requires an economizer by comparing
     # the system capacity to the minimum capacity.
@@ -193,7 +193,7 @@ class NECB2011
     # zone loop
     zones.each do |zone|
       # get design heat temperature for each zone; this is equivalent to design exhaust temperature
-      heat_design_t = 21.0
+      heat_design_t = get_standards_constant('default_heat_design_t') # 21.0
       zone_thermostat = zone.thermostat.get
       if zone_thermostat.to_ThermostatSetpointDualSetpoint.is_initialized
         dual_thermostat = zone_thermostat.to_ThermostatSetpointDualSetpoint.get
@@ -248,7 +248,7 @@ class NECB2011
     #      puts "exhaust heat content = #{exhaust_heat_content}"
 
     # Modify erv_required based on exhaust heat content
-    if exhaust_heat_content > 150.0
+    if exhaust_heat_content > get_standards_constant('min_exhaust_heat_content_for_erv_reqd') #150.0
       erv_required = true
       OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "For #{air_loop_hvac.name}, ERV required based on exhaust heat content.")
     else
@@ -278,21 +278,21 @@ class NECB2011
     # Create an ERV
     erv = OpenStudio::Model::HeatExchangerAirToAirSensibleAndLatent.new(air_loop_hvac.model)
     erv.setName("#{air_loop_hvac.name} ERV")
-    erv.setSensibleEffectivenessat100HeatingAirFlow(0.5)
-    erv.setLatentEffectivenessat100HeatingAirFlow(0.5)
-    erv.setSensibleEffectivenessat75HeatingAirFlow(0.5)
-    erv.setLatentEffectivenessat75HeatingAirFlow(0.5)
-    erv.setSensibleEffectivenessat100CoolingAirFlow(0.5)
-    erv.setLatentEffectivenessat100CoolingAirFlow(0.5)
-    erv.setSensibleEffectivenessat75CoolingAirFlow(0.5)
-    erv.setLatentEffectivenessat75CoolingAirFlow(0.5)
-    erv.setSupplyAirOutletTemperatureControl(true)
-    erv.setHeatExchangerType('Rotary')
-    erv.setFrostControlType('ExhaustOnly')
-    erv.setEconomizerLockout(true)
-    erv.setThresholdTemperature(-23.3) # -10F
-    erv.setInitialDefrostTimeFraction(0.167)
-    erv.setRateofDefrostTimeFractionIncrease(1.44)
+    erv.setSensibleEffectivenessat100HeatingAirFlow(get_standards_constant('erv_sensible_effectiveness_at_100_heating_air_flow')) #0.5
+    erv.setLatentEffectivenessat100HeatingAirFlow(  get_standards_constant('erv_latent_effectiveness_at_100_heating_air_flow')) #0.5
+    erv.setSensibleEffectivenessat75HeatingAirFlow( get_standards_constant('erv_sensible_effectiveness_at_75_heating_air_flow')) #0.5
+    erv.setLatentEffectivenessat75HeatingAirFlow(   get_standards_constant('erv_latent_effectiveness_at_75_heating_air_flow')) #0.5
+    erv.setSensibleEffectivenessat100CoolingAirFlow(get_standards_constant('erv_sensible_effectiveness_at_100_cooling_air_flow')) #0.5
+    erv.setLatentEffectivenessat100CoolingAirFlow(  get_standards_constant('erv_latent_effectiveness_at_100_cooling_air_flow')) #0.5
+    erv.setSensibleEffectivenessat75CoolingAirFlow( get_standards_constant('erv_sensible_effectiveness_at_75_cooling_air_flow')) #0.5
+    erv.setLatentEffectivenessat75CoolingAirFlow(   get_standards_constant('erv_latent_effectiveness_at_75_cooling_air_flow')) #0.5
+    erv.setSupplyAirOutletTemperatureControl(       get_standards_constant('erv_supply_air_outlet_temperature_control'))  #true
+    erv.setHeatExchangerType(                       get_standards_constant('erv_heat_exchanger_type')) # 'Rotary'
+    erv.setFrostControlType(                        get_standards_constant('erv_frost_control_type')) #'ExhaustOnly'
+    erv.setEconomizerLockout(                       get_standards_constant('erv_economizer_lockout')) # true
+    erv.setThresholdTemperature(                    get_standards_constant('erv_threshold_temperature')) # -23.3 # -10F
+    erv.setInitialDefrostTimeFraction(              get_standards_constant('erv_initial_defrost_time_fraction')) # 0.167
+    erv.setRateofDefrostTimeFractionIncrease(       get_standards_constant('erv_rate_of_defrost_time_fraction_increase')) # 1.44
 
     # Add the ERV to the OA system
     erv.addToNode(oa_system.outboardOANode.get)
@@ -300,10 +300,10 @@ class NECB2011
     # Add a setpoint manager OA pretreat
     # to control the ERV
     spm_oa_pretreat = OpenStudio::Model::SetpointManagerOutdoorAirPretreat.new(air_loop_hvac.model)
-    spm_oa_pretreat.setMinimumSetpointTemperature(-99.0)
-    spm_oa_pretreat.setMaximumSetpointTemperature(99.0)
-    spm_oa_pretreat.setMinimumSetpointHumidityRatio(0.00001)
-    spm_oa_pretreat.setMaximumSetpointHumidityRatio(1.0)
+    spm_oa_pretreat.setMinimumSetpointTemperature(get_standards_constant('setpoint_manager_outdoor_air_pretreat_minimum_setpoint_temperature'))# -99.0
+    spm_oa_pretreat.setMaximumSetpointTemperature(get_standards_constant('setpoint_manager_outdoor_air_pretreat_maximum_setpoint_temperature'))# 99.0
+    spm_oa_pretreat.setMinimumSetpointHumidityRatio(get_standards_constant('setpoint_manager_outdoor_air_pretreat_minimum_setpoint_humidity_ratio'))# 0.00001
+    spm_oa_pretreat.setMaximumSetpointHumidityRatio(get_standards_constant('setpoint_manager_outdoor_air_pretreat_maximum_setpoint_humidity_ratio'))# 1.0
     # Reference setpoint node and
     # Mixed air stream node are outlet
     # node of the OA system
@@ -399,7 +399,7 @@ class NECB2011
         else
           term.setDamperHeatingAction(damper_action_eplus)
           control_type_set = true
-          term.setMaximumFlowFractionDuringReheat(0.5)
+          term.setMaximumFlowFractionDuringReheat(get_standards_constant('air_terminal_single_duct_VAV_reheat_maximum_flow_fraction_during_reheat'))
         end
       end
     end
@@ -433,8 +433,8 @@ class NECB2011
   # @return [Array<Double>] [minimum_oa_flow_cfm, maximum_stories].
   # If both nil, never required
   def air_loop_hvac_motorized_oa_damper_limits(air_loop_hvac, climate_zone)
-    minimum_oa_flow_cfm = 0
-    maximum_stories = 0
+    minimum_oa_flow_cfm = get_standards_constant('air_loop_hvac_motorized_oa_damper_limit_minimum_oa_flow_cfm') # 0
+    maximum_stories = get_standards_constant('air_loop_hvac_motorized_oa_damper_limit_maximum_stories') # 0
     return [minimum_oa_flow_cfm, maximum_stories]
   end
 
@@ -455,17 +455,18 @@ class NECB2011
     capacity_w = boiler_hot_water_find_capacity(boiler_hot_water)
 
     # Check if secondary and/or modulating boiler required
-    if capacity_w / 1000.0 >= 352.0
+    if capacity_w / 1000.0 >= get_standards_constant('capacity_boiler_limit_upper') #352.0
       if boiler_hot_water.name.to_s.include?('Primary Boiler')
         boiler_capacity = capacity_w
         boiler_hot_water.setBoilerFlowMode('LeavingSetpointModulated')
-        boiler_hot_water.setMinimumPartLoadRatio(0.25)
+        boiler_hot_water.setMinimumPartLoadRatio(get_standards_constant('boiler_minimum_part_load_ratio')) #0.25
       elsif boiler_hot_water.name.to_s.include?('Secondary Boiler')
         boiler_capacity = 0.001
       end
-    elsif ((capacity_w / 1000.0) >= 176.0) && ((capacity_w / 1000.0) < 352.0)
+    #elsif ((capacity_w / 1000.0) >= 176.0) && ((capacity_w / 1000.0) < 352.0)
+    elsif ((capacity_w / 1000.0) >= get_standards_constant('capacity_boiler_limit_lower')) && ((capacity_w / 1000.0) < get_standards_constant('capacity_boiler_limit_upper'))
       boiler_capacity = capacity_w / 2
-    elsif (capacity_w / 1000.0) <= 176.0
+    elsif (capacity_w / 1000.0) <= get_standards_constant('capacity_boiler_limit_lower') #176.0
       if boiler_hot_water.name.to_s.include?('Primary Boiler')
         boiler_capacity = capacity_w
       elsif boiler_hot_water.name.to_s.include?('Secondary Boiler')

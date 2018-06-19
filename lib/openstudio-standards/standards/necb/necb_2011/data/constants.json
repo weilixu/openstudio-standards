@@ -795,6 +795,303 @@
       "value": 0.80,
       "units": "fraction",
       "notes": "for set_necb_external_surface_conductance method in building_envelope.rb."
+    },
+
+
+
+    {
+      "name": "minimum_capacity_btu_per_hr_for_cooling_cap_>_20_kW",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 68243,
+      "units": "btu/hr",
+      "notes": "for air_loop_hvac_economizer_required? method in hvac_systems.rb."
+    },
+
+
+
+    {
+      "name": "default_heat_design_t",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 21.0,
+      "units": "C",
+      "notes": "for air_loop_hvac_energy_recovery_ventilator_required? method in hvac_systems.rb."
+    },
+    {
+      "name": "min_exhaust_heat_content_for_erv_reqd",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 150.0,
+      "units": "",
+      "notes": "for air_loop_hvac_energy_recovery_ventilator_required? method in hvac_systems.rb. Not sure about units."
+    },
+
+
+    {
+      "name": "erv_sensible_effectiveness_at_100_heating_air_flow",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb. Not sure about units."
+    },
+    {
+      "name": "erv_latent_effectiveness_at_100_heating_air_flow",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb. Not sure about units."
+    },
+    {
+      "name": "erv_sensible_effectiveness_at_75_heating_air_flow",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb. Not sure about units."
+    },
+    {
+      "name": "erv_latent_effectiveness_at_75_heating_air_flow",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb. Not sure about units."
+    },
+    {
+      "name": "erv_sensible_effectiveness_at_100_cooling_air_flow",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb. Not sure about units."
+    },
+    {
+      "name": "erv_latent_effectiveness_at_100_cooling_air_flow",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb. Not sure about units."
+    },
+    {
+      "name": "erv_sensible_effectiveness_at_75_cooling_air_flow",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb. Not sure about units."
+    },
+    {
+      "name": "erv_latent_effectiveness_at_75_cooling_air_flow",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb. Not sure about units."
+    },
+    {
+      "name": "erv_supply_air_outlet_temperature_control",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": true,
+      "units": "boolean",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+    {
+      "name": "erv_heat_exchanger_type",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "Rotary",
+      "units": "string",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+    {
+      "name": "erv_frost_control_type",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "ExhaustOnly",
+      "units": "string",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+    {
+      "name": "erv_economizer_lockout",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": true,
+      "units": "boolean",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+    {
+      "name": "erv_threshold_temperature",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": -23.3,
+      "units": "C",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+    {
+      "name": "erv_initial_defrost_time_fraction",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.167,
+      "units": "fraction",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+    {
+      "name": "erv_rate_of_defrost_time_fraction_increase",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 1.44,
+      "units": "fraction",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+    {
+      "name": "setpoint_manager_outdoor_air_pretreat_minimum_setpoint_temperature",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": -99.0,
+      "units": "C",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+    {
+      "name": "setpoint_manager_outdoor_air_pretreat_maximum_setpoint_temperature",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 99.0,
+      "units": "C",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+    {
+      "name": "setpoint_manager_outdoor_air_pretreat_minimum_setpoint_humidity_ratio",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.00001,
+      "units": "ratio",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+    {
+      "name": "setpoint_manager_outdoor_air_pretreat_maximum_setpoint_humidity_ratio",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 1.0,
+      "units": "ratio",
+      "notes": "for air_loop_hvac_apply_energy_recovery_ventilator method in hvac_systems.rb."
+    },
+
+
+
+    {
+      "name": "air_terminal_single_duct_VAV_reheat_maximum_flow_fraction_during_reheat",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "ratio",
+      "notes": "for air_loop_hvac_apply_vav_damper_action method in hvac_systems.rb. Specifically for AirTerminalSingleDuctVAVReheat when `damper_action != 'Dual Maximum'`"
+    },
+
+
+
+    {
+      "name": "air_loop_hvac_motorized_oa_damper_limit_minimum_oa_flow_cfm",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0,
+      "units": "cfm",
+      "notes": "for air_loop_hvac_motorized_oa_damper_limits method in hvac_systems.rb."
+    },
+    {
+      "name": "air_loop_hvac_motorized_oa_damper_limit_maximum_stories",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0,
+      "units": "integer",
+      "notes": "for air_loop_hvac_motorized_oa_damper_limits method in hvac_systems.rb."
+    },
+
+
+
+    {
+      "name": "capacity_boiler_limit_upper",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 352.0,
+      "units": "kw",
+      "notes": "for boiler_hot_water_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+    {
+      "name": "boiler_minimum_part_load_ratio",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.25,
+      "units": "ratio",
+      "notes": "for boiler_hot_water_apply_efficiency_and_curves method in hvac_systems.rb. This applies when boiler capacity is greater than the `capacity_boiler_limit_upper` constant above"
+    },
+    {
+      "name": "capacity_boiler_limit_lower",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 176.6,
+      "units": "kw",
+      "notes": "for boiler_hot_water_apply_efficiency_and_curves method in hvac_systems.rb."
     }
   ]
 }
