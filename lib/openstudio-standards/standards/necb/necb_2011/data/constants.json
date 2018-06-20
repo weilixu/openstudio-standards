@@ -1067,7 +1067,8 @@
       "name": "capacity_boiler_limit_upper",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.10.6.(c)",
+        "NECB 2011 8.4.4.10.6.(d)"
       ],
       "value": 352.0,
       "units": "kw",
@@ -1077,7 +1078,7 @@
       "name": "boiler_minimum_part_load_ratio",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.10.6.(d)"
       ],
       "value": 0.25,
       "units": "ratio",
@@ -1087,7 +1088,8 @@
       "name": "capacity_boiler_limit_lower",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.10.6.(b)",
+        "NECB 2011 8.4.4.10.6.(c)"
       ],
       "value": 176.6,
       "units": "kw",
@@ -1097,7 +1099,7 @@
       "name": "secondary_boiler_capacity_during_high_load",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.10.6.(d)"
       ],
       "value": 0.001,
       "units": "w",
@@ -1107,7 +1109,7 @@
       "name": "secondary_boiler_capacity_during_low_load",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.10.6.(b)"
       ],
       "value": 0.001,
       "units": "w",
@@ -1130,7 +1132,7 @@
       "name": "chiller_electric_eir_minimum_part_load_ratio",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.11.(6).(h)"
       ],
       "value": 0.25,
       "units": "fraction",
@@ -1140,7 +1142,7 @@
       "name": "chiller_electric_eir_minimum_unloading_ratio",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.11.(6).(h)"
       ],
       "value": 0.25,
       "units": "fraction",
@@ -1150,7 +1152,7 @@
       "name": "chiller_electric_eir_step_limit_capacity",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.11.(6)"
       ],
       "value": 2100.0,
       "units": "kw",
@@ -1160,7 +1162,7 @@
       "name": "secondary_chiller_electric_eir_capacity_min",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.11.(6).(b)"
       ],
       "value": 0.001,
       "units": "w",
@@ -1170,7 +1172,8 @@
       "name": "primary_chiller_electric_eir_capacity_step_value",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.12.(2)",
+        "NECB 2011 8.4.4.12.(3)"
       ],
       "value": 1750,
       "units": "kw",
@@ -1180,7 +1183,7 @@
       "name": "primary_chiller_electric_fan_power_at_design_air_flow_rate_multiplier",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.12.(6).(b)"
       ],
       "value": 0.015,
       "units": "",
@@ -1193,7 +1196,9 @@
       "name": "coil_cooling_dx_multi_stage_capacity_limit",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.11.8.(b)",
+        "NECB 2011 8.4.4.11.8.(c)",
+        "NECB 2011 8.4.4.11.8.(d)"
       ],
       "value": 66.0,
       "units": "kw",
@@ -1226,11 +1231,279 @@
       "name": "coil_heating_gas_multi_stage_capacity_limit",
       "data_type": "value",
       "refs": [
-        ""
+        "NECB 2011 8.4.4.10.7.(b)",
+        "NECB 2011 8.4.4.10.7.(c)"
       ],
       "value": 66.0,
       "units": "kw",
       "notes": "for coil_heating_gas_multi_stage_apply_efficiency_and_curves method in hvac_systems.rb."
+    },
+
+
+    {
+      "name": "fan_baseline_impeller_efficiency",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.65,
+      "units": "",
+      "notes": "for fan_baseline_impeller_efficiency method in hvac_systems.rb."
+    },
+
+
+    {
+      "name": "fan_standard_minimum_motor_efficiency",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.85,
+      "units": "",
+      "notes": "for fan_standard_minimum_motor_efficiency_and_size method in hvac_systems.rb."
+    },
+    {
+      "name": "nominal_hp_for_small_fan",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.5,
+      "units": "HP",
+      "notes": "for fan_standard_minimum_motor_efficiency_and_size method in hvac_systems.rb."
+    },
+
+    {
+      "name": "econ_max_100_pct_oa_schedule_day",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0,
+      "units": "integer",
+      "notes": "for apply_economizers method in hvac_systems.rb"
+    },
+    {
+      "name": "econ_max_100_pct_oa_schedule_hour",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 24,
+      "units": "hr",
+      "notes": "for apply_economizers method in hvac_systems.rb"
+    },
+    {
+      "name": "econ_max_100_pct_oa_schedule_minute",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0,
+      "units": "min",
+      "notes": "for apply_economizers method in hvac_systems.rb"
+    },
+    {
+      "name": "econ_max_100_pct_oa_schedule_seconds",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0,
+      "units": "s",
+      "notes": "for apply_economizers method in hvac_systems.rb"
+    },
+    {
+      "name": "econ_max_100_pct_oa_schedule_fraction",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 1.0,
+      "units": "fraction",
+      "notes": "for apply_economizers method in hvac_systems.rb"
+    },
+
+
+    {
+      "name": "sys1_make_up_air_unit_type_of_load_to_size_on",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "VentilationRequirement",
+      "units": "string",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_minimum_system_air_flow_ratio",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 1.0,
+      "units": "ratio",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_preheat_design_temperature",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 7.0,
+      "units": "C",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_preheat_design_humidity_ratio",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.008,
+      "units": "ratio",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_precool_design_temperature",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 13.0,
+      "units": "C",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_precool_design_humidity_ratio",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.008,
+      "units": "ratio",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_central_cooling_design_supply_air_temperature",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 13,
+      "units": "C",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_central_heating_design_supply_air_temperature",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 43,
+      "units": "C",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_sizing_option",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "NonCoincident",
+      "units": "string",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_all_outdoor_air_in_cooling",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": true,
+      "units": "boolean",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_all_outdoor_air_in_heating",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": true,
+      "units": "boolean",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_central_cooling_design_supply_air_humidity_ratio",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.0085,
+      "units": "ratio",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_central_heating_design_supply_air_humidity_ratio",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.0080,
+      "units": "ratio",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_cooling_design_air_flow_method",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "DesignDay",
+      "units": "string",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_cooling_design_air_flow_rate",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.0,
+      "units": "rate",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_heating_design_air_flow_method",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "DesignDay",
+      "units": "string",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_heating_design_air_flow_rate",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": 0.0,
+      "units": "rate",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
+    },
+    {
+      "name": "sys1_make_up_air_unit_system_outdoor_air_method",
+      "data_type": "value",
+      "refs": [
+        ""
+      ],
+      "value": "ZoneSum",
+      "units": "string",
+      "notes": "for add_sys1_unitary_ac_baseboard_heating method in hvac_systems.rb"
     }
   ]
 }

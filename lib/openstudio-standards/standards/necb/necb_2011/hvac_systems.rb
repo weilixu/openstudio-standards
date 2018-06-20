@@ -876,7 +876,7 @@ class NECB2011
   end
 
   # Applies the standard efficiency ratings and typical performance curves to this object.
-  #
+  # NECB 2011 8.4.4.10.(6)
   # @return [Bool] true if successful, false if not
   def coil_heating_gas_multi_stage_apply_efficiency_and_curves(coil_heating_gas_multi_stage, standards)
     successfully_set_all_properties = true
@@ -946,7 +946,7 @@ class NECB2011
     # or do we always assume a certain type of
     # fan impeller for the baseline system?
     # TODO check COMNET and T24 ACM and PNNL 90.1 doc
-    fan_impeller_eff = 0.65
+    fan_impeller_eff = get_standards_constant('fan_baseline_impeller_efficiency') #0.65
 
     return fan_impeller_eff
   end
@@ -963,7 +963,7 @@ class NECB2011
   # @param motor_bhp [Double] motor brake horsepower (hp)
   # @return [Array<Double>] minimum motor efficiency (0.0 to 1.0), nominal horsepower
   def fan_standard_minimum_motor_efficiency_and_size(fan, motor_bhp)
-    fan_motor_eff = 0.85
+    fan_motor_eff = get_standards_constant('fan_standard_minimum_motor_efficiency') # 0.85
     nominal_hp = motor_bhp
 
     # Don't attempt to look up motor efficiency
@@ -1014,7 +1014,7 @@ class NECB2011
     # zone exhaust, fan coil, and fan powered terminals.
     # In this case, use the 0.5 HP for the lookup.
     if fan_small_fan?(fan)
-      nominal_hp = 0.5
+      nominal_hp = get_standards_constant('nominal_hp_for_small_fan') #0.5
     else
       motor_properties = model_find_object(motors, search_criteria, motor_bhp)
       if motor_properties.nil?
@@ -1093,7 +1093,12 @@ class NECB2011
     econ_max_100_pct_oa_sch = OpenStudio::Model::ScheduleRuleset.new(model)
     econ_max_100_pct_oa_sch.setName('Economizer Max OA Fraction 100 pct')
     econ_max_100_pct_oa_sch.defaultDaySchedule.setName('Economizer Max OA Fraction 100 pct Default')
-    econ_max_100_pct_oa_sch.defaultDaySchedule.addValue(OpenStudio::Time.new(0, 24, 0, 0), 1.0)
+    econ_max_100_pct_oa_sch.defaultDaySchedule.addValue(OpenStudio::Time.new( get_standards_constant('econ_max_100_pct_oa_schedule_day'),
+                                                                              get_standards_constant('econ_max_100_pct_oa_schedule_hour'),
+                                                                              get_standards_constant('econ_max_100_pct_oa_schedule_minute'),
+                                                                              get_standards_constant('econ_max_100_pct_oa_schedule_seconds')
+                                                                            ),
+                                                        get_standards_constant('econ_max_100_pct_oa_schedule_fraction'))
 
     # Check each airloop
     model.getAirLoopHVACs.sort.each do |air_loop|
@@ -1225,25 +1230,25 @@ class NECB2011
       # this systems is a constant volume system with no VAV terminals,
       # and therfore needs different default settings
       air_loop_sizing = mau_air_loop.sizingSystem # TODO units
-      air_loop_sizing.setTypeofLoadtoSizeOn('VentilationRequirement')
+      air_loop_sizing.setTypeofLoadtoSizeOn(                        get_standards_constant('sys1_make_up_air_unit_type_of_load_to_size_on'))        # 'VentilationRequirement'
       air_loop_sizing.autosizeDesignOutdoorAirFlowRate
-      air_loop_sizing.setMinimumSystemAirFlowRatio(1.0)
-      air_loop_sizing.setPreheatDesignTemperature(7.0)
-      air_loop_sizing.setPreheatDesignHumidityRatio(0.008)
-      air_loop_sizing.setPrecoolDesignTemperature(13.0)
-      air_loop_sizing.setPrecoolDesignHumidityRatio(0.008)
-      air_loop_sizing.setCentralCoolingDesignSupplyAirTemperature(13)
-      air_loop_sizing.setCentralHeatingDesignSupplyAirTemperature(43)
-      air_loop_sizing.setSizingOption('NonCoincident')
-      air_loop_sizing.setAllOutdoorAirinCooling(true)
-      air_loop_sizing.setAllOutdoorAirinHeating(true)
-      air_loop_sizing.setCentralCoolingDesignSupplyAirHumidityRatio(0.0085)
-      air_loop_sizing.setCentralHeatingDesignSupplyAirHumidityRatio(0.0080)
-      air_loop_sizing.setCoolingDesignAirFlowMethod('DesignDay')
-      air_loop_sizing.setCoolingDesignAirFlowRate(0.0)
-      air_loop_sizing.setHeatingDesignAirFlowMethod('DesignDay')
-      air_loop_sizing.setHeatingDesignAirFlowRate(0.0)
-      air_loop_sizing.setSystemOutdoorAirMethod('ZoneSum')
+      air_loop_sizing.setMinimumSystemAirFlowRatio(                 get_standards_constant('sys1_make_up_air_unit_minimum_system_air_flow_ratio'))  # 1.0
+      air_loop_sizing.setPreheatDesignTemperature(                  get_standards_constant('sys1_make_up_air_unit_preheat_design_temperature'))     # 7.0
+      air_loop_sizing.setPreheatDesignHumidityRatio(                get_standards_constant('sys1_make_up_air_unit_preheat_design_humidity_ratio'))  # 0.008
+      air_loop_sizing.setPrecoolDesignTemperature(                  get_standards_constant('sys1_make_up_air_unit_precool_design_temperature'))     # 13.0
+      air_loop_sizing.setPrecoolDesignHumidityRatio(                get_standards_constant('sys1_make_up_air_unit_precool_design_humidity_ratio'))  # 0.008
+      air_loop_sizing.setCentralCoolingDesignSupplyAirTemperature(  get_standards_constant('sys1_make_up_air_unit_central_cooling_design_supply_air_temperature'))   # 13
+      air_loop_sizing.setCentralHeatingDesignSupplyAirTemperature(  get_standards_constant('sys1_make_up_air_unit_central_heating_design_supply_air_temperature'))   # 43
+      air_loop_sizing.setSizingOption(                              get_standards_constant('sys1_make_up_air_unit_sizing_option'))                  # 'NonCoincident'
+      air_loop_sizing.setAllOutdoorAirinCooling(                    get_standards_constant('sys1_make_up_air_unit_all_outdoor_air_in_cooling'))     # true
+      air_loop_sizing.setAllOutdoorAirinHeating(                    get_standards_constant('sys1_make_up_air_unit_all_outdoor_air_in_heating'))     # true
+      air_loop_sizing.setCentralCoolingDesignSupplyAirHumidityRatio(get_standards_constant('sys1_make_up_air_unit_central_cooling_design_supply_air_humidity_ratio'))# 0.0085
+      air_loop_sizing.setCentralHeatingDesignSupplyAirHumidityRatio(get_standards_constant('sys1_make_up_air_unit_central_heating_design_supply_air_humidity_ratio'))# 0.0080
+      air_loop_sizing.setCoolingDesignAirFlowMethod(                get_standards_constant('sys1_make_up_air_unit_cooling_design_air_flow_method')) # 'DesignDay'
+      air_loop_sizing.setCoolingDesignAirFlowRate(                  get_standards_constant('sys1_make_up_air_unit_cooling_design_air_flow_rate'))   # 0.0
+      air_loop_sizing.setHeatingDesignAirFlowMethod(                get_standards_constant('sys1_make_up_air_unit_heating_design_air_flow_method')) # 'DesignDay'
+      air_loop_sizing.setHeatingDesignAirFlowRate(                  get_standards_constant('sys1_make_up_air_unit_heating_design_air_flow_rate'))   # 0.0
+      air_loop_sizing.setSystemOutdoorAirMethod(                    get_standards_constant('sys1_make_up_air_unit_system_outdoor_air_method'))      # 'ZoneSum'
 
       mau_fan = OpenStudio::Model::FanConstantVolume.new(model, always_on)
 
