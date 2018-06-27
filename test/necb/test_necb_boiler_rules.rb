@@ -13,7 +13,6 @@ class NECB_HVAC_Tests < MiniTest::Test
     output_folder = "#{File.dirname(__FILE__)}/output/boiler_efficiency"
     FileUtils.rm_rf(output_folder)
     FileUtils.mkdir_p(output_folder)
-    standard = Standard.build('NECB2011')
 
     # Generate the osm files for all relevant cases to generate the test data for system 1
     boiler_fueltypes = ['Electricity', 'NaturalGas', 'FuelOil#2']
@@ -26,6 +25,7 @@ class NECB_HVAC_Tests < MiniTest::Test
     # save baseline
     BTAP::FileIO.save_osm(model, "#{output_folder}/baseline.osm")
     templates.each do |template|
+      standard = Standard.build(template)
       boiler_expected_result_file = File.join(File.dirname(__FILE__), 'data', "#{template.downcase}_compliance_boiler_efficiencies_expected_results.csv")
 
       # Initialize hashes for storing expected boiler efficiency data from file
@@ -253,7 +253,7 @@ class NECB_HVAC_Tests < MiniTest::Test
     # save baseline
     BTAP::FileIO.save_osm(model, "#{output_folder}/baseline.osm")
     name = "#{template}_sys1_Boiler-#{boiler_fueltype}_Mau-#{mau_type}_MauCoil-#{mau_heating_coil_type}_Baseboard-#{baseboard_type}"
-    puts "***************************************#{name}*******************************************************\n"
+    puts "**********git add gi*****************************#{name}*******************************************************\n"
     hw_loop = OpenStudio::Model::PlantLoop.new(model)
     always_on = model.alwaysOnDiscreteSchedule
     standard.setup_hw_loop_with_components(model,hw_loop, boiler_fueltype, always_on)
