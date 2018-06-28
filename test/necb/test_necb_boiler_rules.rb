@@ -253,7 +253,7 @@ class NECB_HVAC_Tests < MiniTest::Test
     # save baseline
     BTAP::FileIO.save_osm(model, "#{output_folder}/baseline.osm")
     name = "#{template}_sys1_Boiler-#{boiler_fueltype}_Mau-#{mau_type}_MauCoil-#{mau_heating_coil_type}_Baseboard-#{baseboard_type}"
-    puts "**********git add gi*****************************#{name}*******************************************************\n"
+    puts "***************************************#{name}*******************************************************\n"
     hw_loop = OpenStudio::Model::PlantLoop.new(model)
     always_on = model.alwaysOnDiscreteSchedule
     standard.setup_hw_loop_with_components(model,hw_loop, boiler_fueltype, always_on)

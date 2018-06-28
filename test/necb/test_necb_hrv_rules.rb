@@ -12,7 +12,8 @@ class NECB_HVAC_Tests < MiniTest::Test
   def test_NECB2011_hrv_eff
     output_folder = "#{File.dirname(__FILE__)}/output/hrv_eff"
     FileUtils.rm_rf(output_folder)
-    standard = Standard.build('NECB2011')
+    template = 'NECB2011'
+    standard = Standard.build(template)
  
     # Generate the osm files for all relevant cases to generate the test data
     model = BTAP::FileIO.load_osm("#{File.dirname(__FILE__)}/models/5ZoneNoHVAC.osm")
@@ -50,7 +51,7 @@ class NECB_HVAC_Tests < MiniTest::Test
     end
 
     # run the standards
-    result = run_the_measure(model, "#{output_folder}/#{name}/sizing")
+    result = run_the_measure(model, template, "#{output_folder}/#{name}/sizing")
     # Save the model
     BTAP::FileIO.save_osm(model, "#{output_folder}/#{name}.osm")
     assert_equal(true, result, "test_shw_curves: Failure in Standards for #{name}")
@@ -93,10 +94,10 @@ class NECB_HVAC_Tests < MiniTest::Test
     end
   end
 
-  def run_the_measure(model, sizing_dir)
+  def run_the_measure(model, template, sizing_dir)
     if PERFORM_STANDARDS
       # Hard-code the building vintage
-      building_vintage = 'NECB2011'
+      building_vintage = template
       building_type = 'NECB'
       climate_zone = 'NECB'
       standard = Standard.build(building_vintage)
