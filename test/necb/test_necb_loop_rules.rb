@@ -13,7 +13,8 @@ class NECB_HVAC_Tests < MiniTest::Test
     output_folder = "#{File.dirname(__FILE__)}/output/hw_loop_rules"
     FileUtils.rm_rf(output_folder)
     FileUtils.mkdir_p(output_folder)
-    standard = Standard.build('NECB2011')
+    template = 'NECB2011'
+    standard = Standard.build(template)
 
     # Generate the osm files for all relevant cases to generate the test data for system 6
     boiler_fueltype = 'NaturalGas'
@@ -42,7 +43,7 @@ class NECB_HVAC_Tests < MiniTest::Test
     # Save the model after btap hvac.
     BTAP::FileIO.save_osm(model, "#{output_folder}/#{name}.hvacrb")
     # run the standards
-    result = run_the_measure(model, "#{output_folder}/#{name}/sizing")
+    result = run_the_measure(model,  template,"#{output_folder}/#{name}/sizing")
     # Save the model
     BTAP::FileIO.save_osm(model, "#{output_folder}/#{name}.osm")
     assert_equal(true, result, "test_hw_loop_rules: Failure in Standards for #{name}")
@@ -86,7 +87,8 @@ class NECB_HVAC_Tests < MiniTest::Test
     output_folder = "#{File.dirname(__FILE__)}/output/chw_loop_rules"
     FileUtils.rm_rf(output_folder)
     FileUtils.mkdir_p(output_folder)
-    standard = Standard.build("NECB2011")
+    template = 'NECB2011'
+    standard = Standard.build(template)
 
     # Generate the osm files for all relevant cases to generate the test data for system 2
     boiler_fueltype = 'Electricity'
@@ -112,7 +114,7 @@ class NECB_HVAC_Tests < MiniTest::Test
     # Save the model after btap hvac.
     BTAP::FileIO.save_osm(model, "#{output_folder}/#{name}.hvacrb")
     # run the standards
-    result = run_the_measure(model, "#{output_folder}/#{name}/sizing")
+    result = run_the_measure(model, template,"#{output_folder}/#{name}/sizing")
     # Save the model
     BTAP::FileIO.save_osm(model, "#{output_folder}/#{name}.osm")
     assert_equal(true, result, "test_chw_loop_rules: Failure in Standards for #{name}")
@@ -159,7 +161,8 @@ class NECB_HVAC_Tests < MiniTest::Test
     output_folder = "#{File.dirname(__FILE__)}/output/cw_loop_rules"
     FileUtils.rm_rf(output_folder)
     FileUtils.mkdir_p(output_folder)
-    standard = Standard.build("NECB2011")
+    template = 'NECB2011'
+    standard = Standard.build(template)
 
     # Generate the osm files for all relevant cases to generate the test data for system 2
     boiler_fueltype = 'Electricity'
@@ -185,7 +188,7 @@ class NECB_HVAC_Tests < MiniTest::Test
     # Save the model after btap hvac.
     BTAP::FileIO.save_osm(model, "#{output_folder}/#{name}.hvacrb")
     # run the standards
-    result = run_the_measure(model, "#{output_folder}/#{name}/sizing")
+    result = run_the_measure(model, template,"#{output_folder}/#{name}/sizing")
     # Save the model
     BTAP::FileIO.save_osm(model, "#{output_folder}/#{name}.osm")
     assert_equal(true, result, "test_cw_loop_rules: Failure in Standards for #{name}")
@@ -231,10 +234,10 @@ class NECB_HVAC_Tests < MiniTest::Test
     end
   end
   
-  def run_the_measure(model, sizing_dir)
+  def run_the_measure(model, template, sizing_dir)
     if PERFORM_STANDARDS
       # Hard-code the building vintage
-      building_vintage = 'NECB2011'
+      building_vintage = template
       building_type = 'NECB'
       climate_zone = 'NECB'
       standard = Standard.build(building_vintage)
