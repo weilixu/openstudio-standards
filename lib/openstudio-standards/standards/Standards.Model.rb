@@ -2146,7 +2146,7 @@ class Standard
       desired_object = matching_objects[0]
     else
       desired_object = matching_objects[0]
-      OpenStudio.logFree(OpenStudio::Warn, 'openstudio.standards.Model', "Find object search criteria returned #{matching_objects.size} results, the first one will be returned. Called from #{caller(0)[1]}. \n Search criteria: \n #{search_criteria}, capacity = #{capacity} \n  All results: \n #{matching_objects.join("\n")}")
+      OpenStudio.logFree(OpenStudio::Warn, 'openstudio.standards.Model', "Find object search criteria returned #{matching_objects.size} results, the first one will be returned. Called from #{caller(0)[1]}. \n Search criteria: \n #{search_criteria}, capacity = #{capacity} \n  All results: \n#{matching_objects.join("\n")}")
     end
 
     return desired_object
@@ -2375,7 +2375,7 @@ class Standard
       end
 
     else
-      puts "Unknown material type #{material_type}"
+      OpenStudio.logFree(OpenStudio::Error, 'openstudio.standards.Model', "Unknown material type #{material_type}, cannot add material called #{material_name}.")
       exit
     end
 
@@ -3004,19 +3004,7 @@ class Standard
   # @return [hash] key for climate zone and building type, both values are strings
   def model_get_building_climate_zone_and_building_type(model, remap_office = true)
     # get climate zone from model
-    # get ashrae climate zone from model
-    climate_zone = ''
-    model.getClimateZones.climateZones.each do |cz|
-      if cz.institution == 'ASHRAE'
-        climate_zone = if cz.value == '7' || cz.value == '8'
-                         "ASHRAE 169-2006-#{cz.value}A"
-                       else
-                         "ASHRAE 169-2006-#{cz.value}"
-                       end
-      elsif cz.institution == 'CEC'
-        climate_zone = "CEC T24-CEC#{cz.value}"
-      end
-    end
+    climate_zone = model_standards_climate_zone(model)
 
     # get building type from model
     building_type = ''
@@ -3943,13 +3931,7 @@ class Standard
     end
 
     # get climate zone value
-    climate_zone_value = ''
-    model.getClimateZones.climateZones.each do |cz|
-      if cz.institution == 'ASHRAE'
-        climate_zone_value = cz.value
-        next
-      end
-    end
+    climate_zone = model_standards_climate_zone(model)
 
     internal_loads = {}
     internal_loads['mech_vent_cfm'] = units_per_bldg * (0.01 * conditioned_floor_area + 7.5 * (bedrooms_per_unit + 1.0))
@@ -4381,9 +4363,7 @@ class Standard
           sub_surface_reduce_area_by_percent_by_shrinking_toward_centroid(ss, red)
         end
       end
-    end
-    return true
-  end
+
 
   # This method return the building ratio of subsurface_area / surface_type_area where surface_type can be "Wall" or "RoofCeiling"
   def get_outdoor_subsurface_ratio(model, surface_type = "Wall")
@@ -4460,7 +4440,6 @@ class Standard
       OpenStudio.logFree(OpenStudio::Info, 'openstudio.model.Model', "Found mulitpliers for space #{@space_multiplier_map}")
     end
   end
-
 
   # Helper method to fill in hourly values
   def model_add_vals_to_sch(model, day_sch, sch_type, values)
