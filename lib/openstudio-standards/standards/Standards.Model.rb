@@ -4363,6 +4363,9 @@ class Standard
           sub_surface_reduce_area_by_percent_by_shrinking_toward_centroid(ss, red)
         end
       end
+    end
+    return true
+  end
 
 
   # This method return the building ratio of subsurface_area / surface_type_area where surface_type can be "Wall" or "RoofCeiling"
