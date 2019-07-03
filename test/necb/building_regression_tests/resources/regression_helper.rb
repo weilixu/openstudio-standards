@@ -100,7 +100,7 @@ class NECBRegressionHelper < Minitest::Test
     FileUtils.rm(diff_file) if File.exists?(diff_file)
     if diffs.size > 0
       File.write(diff_file, JSON.pretty_generate(diffs))
-      puts "There were #{diffs.size} differences/errors in #{expected_osm_file} #{template} #{epw_file}"
+      puts "There were #{diffs.size} differences/errors in #{expected_osm_file} #{@template} #{@epw_file}"
       return false, {"diffs-errors" => diffs}
     else
       return true, []
@@ -112,8 +112,9 @@ class NECBRegressionHelper < Minitest::Test
     workspace_path = "#{@run_dir}/ModelToIdf/in.idf"
     sql_path = "#{@run_dir}/ModelToIdf/EnergyPlusPreProcess-0/EnergyPlus-0/eplusout.sql"
     report_path = "#{@run_dir}/report.html"
-    test_qaqc_file = "#{expected_results_folder}#{@model_name}_test_result_qaqc.json"
-    [model_out_path, workspace_path, sql_path, report_path, test_qaqc_file].each do |file|
+    test_qaqc_file = "#{@expected_results_folder}#{@model_name}_test_result_qaqc.json"
+    qaqc_diff_file = "#{@expected_results_folder}#{@model_name}_test_result_qaqc_diffs.json"
+    [model_out_path, workspace_path, sql_path, report_path, test_qaqc_file, qaqc_diff_file].each do |file|
       if File.exist?(file)
         FileUtils.rm(file)
       end
@@ -129,7 +130,7 @@ class NECBRegressionHelper < Minitest::Test
     qaqc_diff_file = "#{@expected_results_folder}#{@model_name}_test_result_qaqc_diffs.json"
     qaqc = Standard.build("#{@template}").init_qaqc(@model)
     #write to json file.
-    File.open(test_qaqc_file, 'w') {|f| f.write(JSON.pretty_generate(qaqc, {:allow_nan => true}))}
+    File.open(test_qaqc_file, 'w') {|f| f.write(JSON.pretty_generate(qaqc))}
     test = File.new(test_qaqc_file, 'r')
     expected = File.new(expected_qaqc_file, 'r')
     diffs = JsonCompare.get_diff(Yajl::Parser.parse(expected), Yajl::Parser.parse(test))
@@ -139,7 +140,7 @@ class NECBRegressionHelper < Minitest::Test
       puts "qaqc has differences."
       puts JSON.pretty_generate(diffs)
       puts "You can compare the files using diff #{expected_qaqc_file} #{test_qaqc_file}"
-      File.open(qaqc_diff_file, 'w') {|f| f.write(JSON.pretty_generate(diffs, {:allow_nan => true}))}
+      File.open(qaqc_diff_file, 'w') {|f| f.write(JSON.pretty_generate(diffs))}
       return false
     end
   end

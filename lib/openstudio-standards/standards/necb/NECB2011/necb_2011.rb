@@ -177,11 +177,6 @@ class NECB2011 < Standard
                                    epw_file:,
                                    debug: false,
                                    sizing_run_dir: Dir.pwd,
-                                   x_scale: 1.0,
-                                   y_scale: 1.0,
-                                   z_scale: 1.0,
-                                   fdwr_set: 1.1,
-                                   srr_set: 1.1,
                                    new_auto_zoner: true
 
   )
@@ -191,153 +186,121 @@ class NECB2011 < Standard
 
     return model_apply_standard(model: model,
                                 epw_file: epw_file,
-                                x_scale: x_scale,
-                                y_scale: y_scale,
-                                z_scale: z_scale,
                                 sizing_run_dir: sizing_run_dir,
-                                fdwr_set: fdwr_set,
-                                srr_set: srr_set,
                                 new_auto_zoner: new_auto_zoner)
   end
 
 
   # Created this method so that additional methods can be addded for bulding the prototype model in later
   # code versions without modifying the build_protoype_model method or copying it wholesale for a few changes.
-  def model_apply_standard(model:,
-                           epw_file:,
-                           debug: false,
-                           sizing_run_dir: Dir.pwd,
-                           x_scale: 1.0,
-                           y_scale: 1.0,
-                           z_scale: 1.0,
-                           fdwr_set: 1.1,
-                           srr_set: 1.1,
-                           new_auto_zoner: true
+  def model_apply_standard(model:, epw_file:, debug: false, sizing_run_dir: Dir.pwd, new_auto_zoner: true)
+    @climate_zone = 'NECB HDD Method'
+    standard_loads(epw_file, model)
+    #Zone the model according to rules. This will invoke another sizing run.
+    auto_zoning(model: model, sizing_run_dir: sizing_run_dir)
+    standard_hvac(model, sizing_run_dir)
+    standard_plant(debug, model, sizing_run_dir)
+    return model
+  end
 
-  )
-    building_type = model.getBuilding.standardsBuildingType.empty? ? "unknown" : model.getBuilding.standardsBuildingType.get
-    model.getBuilding.setStandardsBuildingType("#{self.class.name}_#{building_type}")
-    climate_zone = 'NECB HDD Method'
-
-    # prototype generation.I'm current
-    scale_model_geometry(model, x_scale, y_scale, z_scale) if x_scale != 1.0 || y_scale != 1.0 || z_scale != 1.0
-    #validate that model has information required.
-    #puts 'Old SPace types'
-    # model.getSpaceTypes.each do |spacetype|
-    #   puts spacetype.name
-    # end
-
-    return false unless validate_initial_model(model)
-
-    #Ensure that the space types names match the space types names in the code.
-    return false unless validate_space_types(model)
-
-    #puts Old SPace types
-    # puts 'new spacetypes'
-    # model.getSpaceTypes.each do |spacetype|
-    #   puts spacetype.name
-    # end
-
-    #Get rid of any existing Thermostats. We will only use the code schedules.
-    model.getThermostatSetpointDualSetpoints(&:remove)
-
-    #Set simulation start day to be consistent.
-    model.getYearDescription.setDayofWeekforStartDay('Sunday')
-
-    #Set climate data.
-    model_add_design_days_and_weather_file(model, climate_zone, epw_file) # Standards
-    model_add_ground_temperatures(model, nil, climate_zone) # prototype candidate
-
-    #Add Occ sensor schedule adjustments where needed.
-    set_occ_sensor_spacetypes(model, @space_type_map)
-
-    #Set Loads/Schedules
-    model_add_loads(model)
-
-
-    #Add Infiltration
-    model_apply_infiltration_standard(model)
-
-    #Modify_surface_convection_algorithm
-    model.getInsideSurfaceConvectionAlgorithm.setAlgorithm('TARP')
-    model.getOutsideSurfaceConvectionAlgorithm.setAlgorithm('TARP')
-
-    #Add default constructions
-    model_add_constructions(model)
-    apply_standard_construction_properties(model)
-
-    #Set up thermal zones for initial sizing run.
-    model_create_thermal_zones(model, @space_multiplier_map)
-
-    # Set FDWR and SSR.  Do this after the thermal zones are set because the methods need to know what walls and roofs
-    # are adjacent to conditioned spaces.
-    apply_standard_window_to_wall_ratio(model: model, fdwr_set: fdwr_set)
-    apply_standard_skylight_to_roof_ratio(model: model, srr_set: srr_set)
-
-    #Do a sizing run for HVAC now that all the loads have been defined.
-    if model_run_sizing_run(model, "#{sizing_run_dir}/SR0") == false
-      raise("sizing run 0 failed!")
+  def standard_plant(debug, model, sizing_run_dir)
+    #Do a second sizing run for the plant and loops.
+    if model_run_sizing_run(model, "#{sizing_run_dir}/SR1") == false
+      raise("sizing run 1 failed! check #{sizing_run_dir}")
     end
+    # This is needed for NECB2011 as a workaround for sizing the reheat boxes
+    model.getAirTerminalSingleDuctVAVReheats.each {|iobj| air_terminal_single_duct_vav_reheat_set_heating_cap(iobj)}
+    # Apply the prototype HVAC assumptions
+    # which include sizing the fan pressure rises based
+    # on the flow rate of the system.
+    model_apply_prototype_hvac_assumptions(model, nil, @climate_zone)
 
-    # Create Reference HVAC Systems.
-    if new_auto_zoner
-      auto_zoning(model: model, sizing_run_dir: sizing_run_dir)
-      system_fuel_defaults = get_canadian_system_defaults_by_weatherfile_name(model)
-      auto_system(model: model,
-                  boiler_fueltype: system_fuel_defaults['boiler_fueltype'],
-                  baseboard_type: system_fuel_defaults['baseboard_type'],
-                  mau_type: system_fuel_defaults['mau_type'],
-                  mau_heating_coil_type: system_fuel_defaults['mau_heating_coil_type'],
-                  mau_cooling_type: system_fuel_defaults['mau_cooling_type'],
-                  chiller_type: system_fuel_defaults['chiller_type'],
-                  heating_coil_type_sys3: system_fuel_defaults['heating_coil_type_sys3'],
-                  heating_coil_type_sys4: system_fuel_defaults['heating_coil_type_sys4'],
-                  heating_coil_type_sys6: system_fuel_defaults['heating_coil_type_sys6']
-      )
-      random = Random.new(1234)
-      model.getThermalZones.sort.each { |item| item.setRenderingColor(self.set_random_rendering_color(item,random))}
-      model.getSpaceTypes.sort.each { |item| item.setRenderingColor(self.set_random_rendering_color(item, random))}
-    else
-      model_add_hvac(model: model) # standards for NECB Prototype for NREL candidate
-    end
+    # Apply the HVAC efficiency standard
+    model_apply_hvac_efficiency_standard(model, @climate_zone)
+    # Fix EMS references.
+    # Temporary workaround for OS issue #2598
+    model_temp_fix_ems_references(model)
+
+    # Add output variables for debugging
+    model_request_timeseries_outputs(model) if debug
+  end
+
+  def standard_hvac(model, sizing_run_dir)
+
+    system_fuel_defaults = get_canadian_system_defaults_by_weatherfile_name(model)
+    auto_system(model: model,
+                boiler_fueltype: system_fuel_defaults['boiler_fueltype'],
+                baseboard_type: system_fuel_defaults['baseboard_type'],
+                mau_type: system_fuel_defaults['mau_type'],
+                mau_heating_coil_type: system_fuel_defaults['mau_heating_coil_type'],
+                mau_cooling_type: system_fuel_defaults['mau_cooling_type'],
+                chiller_type: system_fuel_defaults['chiller_type'],
+                heating_coil_type_sys3: system_fuel_defaults['heating_coil_type_sys3'],
+                heating_coil_type_sys4: system_fuel_defaults['heating_coil_type_sys4'],
+                heating_coil_type_sys6: system_fuel_defaults['heating_coil_type_sys6']
+    )
+    random = Random.new(1234)
+    model.getThermalZones.sort.each {|item| item.setRenderingColor(self.set_random_rendering_color(item, random))}
+    model.getSpaceTypes.sort.each {|item| item.setRenderingColor(self.set_random_rendering_color(item, random))}
+
     model_add_swh(model)
     model_apply_sizing_parameters(model)
 
     # set a larger tolerance for unmet hours from default 0.2 to 1.0C
     model.getOutputControlReportingTolerances.setToleranceforTimeHeatingSetpointNotMet(1.0)
     model.getOutputControlReportingTolerances.setToleranceforTimeCoolingSetpointNotMet(1.0)
+  end
 
-    #Do a second sizing run for the plant and loops.
-    if model_run_sizing_run(model, "#{sizing_run_dir}/SR1") == false
-      raise("sizing run 1 failed! check #{sizing_run_dir}")
+  def standard_loads(epw_file, model)
+    loads_sucessful = false
+    building_type = model.getBuilding.standardsBuildingType.empty? ? "unknown" : model.getBuilding.standardsBuildingType.get
+    model.getBuilding.setStandardsBuildingType("#{self.class.name}_#{building_type}")
+
+    # Ensure that the space types names match the space types names in the code.
+    if validate_initial_model(model) and validate_space_types(model)
+
+      #Get rid of any existing Thermostats. We will only use the code schedules.
+      model.getThermostatSetpointDualSetpoints(&:remove)
+
+      #Set simulation start day to be consistent.
+      model.getYearDescription.setDayofWeekforStartDay('Sunday')
+
+      #Set climate data.
+      model_add_design_days_and_weather_file(model, @climate_zone, epw_file) # Standards
+      model_add_ground_temperatures(model, nil, @climate_zone) # prototype candidate
+
+      #Add Occ sensor schedule adjustments where needed.
+      set_occ_sensor_spacetypes(model, @space_type_map)
+
+      #Set Loads/Schedules
+      model_add_loads(model)
+
+      #Add Infiltration
+      model_apply_infiltration_standard(model)
+
+      # Add daylighting controls per standard
+      # only four zones in large hotel have daylighting controls
+      model_add_daylighting_controls(model) # to be removed after refactor.
+
+      #Modify_surface_convection_algorithm
+      model.getInsideSurfaceConvectionAlgorithm.setAlgorithm('TARP')
+      model.getOutsideSurfaceConvectionAlgorithm.setAlgorithm('TARP')
+
+      #Add default constructions
+      model_add_constructions(model)
+      apply_standard_construction_properties(model)
+
+      #Set up thermal zones for initial sizing run.
+      model_create_thermal_zones(model, @space_multiplier_map)
+
+      # Set FDWR and SSR.  Do this after the thermal zones are set because the methods need to know what walls and roofs
+      # are adjacent to conditioned spaces.
+      apply_standard_window_to_wall_ratio(model: model)
+      apply_standard_skylight_to_roof_ratio(model: model)
+    else
+      loads_sucessful = false
     end
-
-    # This is needed for NECB2011 as a workaround for sizing the reheat boxes
-    model.getAirTerminalSingleDuctVAVReheats.each {|iobj| air_terminal_single_duct_vav_reheat_set_heating_cap(iobj)}
-    # Apply the prototype HVAC assumptions
-    # which include sizing the fan pressure rises based
-    # on the flow rate of the system.
-    model_apply_prototype_hvac_assumptions(model, nil, climate_zone)
-
-    # Apply the HVAC efficiency standard
-    model_apply_hvac_efficiency_standard(model, climate_zone)
-    # Fix EMS references.
-    # Temporary workaround for OS issue #2598
-    model_temp_fix_ems_references(model)
-    # Add daylighting controls per standard
-    # only four zones in large hotel have daylighting controls
-    # todo: YXC to merge to the main function
-    model_add_daylighting_controls(model) # to be removed after refactor.
-    # Add output variables for debugging
-    model_request_timeseries_outputs(model) if debug
-    # Remove duplicate materials and constructions (currently commented out).
-    # Commented out because it consumes a significant portion of the btap run time (30% - 50%).  The line below should
-    # be uncommented when the flie clarity it affords is desired.
-    # model = BTAP::FileIO::remove_duplicate_materials_and_constructions(model)
-
-    #set space_type colors
-    # model.getSpaceTypes.sort.each { |space_type| space_type.setRenderingColor(standard.set_random_rendering_color(space_type)) }
-    return model
+    return loads_sucessful
   end
 
   #this method will determine the vintage of NECB spacetypes the model contains. It will return nil if it can't
