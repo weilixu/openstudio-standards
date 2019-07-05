@@ -228,18 +228,18 @@ class NECB2011 < Standard
   end
 
   def standard_systems(model:, sizing_run_dir:, dominant_heating_fuel: nil)
-    fuel_sources = nil
+    system_fuel_defaults = nil
     case dominant_heating_fuel
     when 'Electricity'
-      fuel_sources = @standards_data['regional_fuel_use'].detect {|fuel_sources| fuel_sources['state_province_regions'].include?('BC')}
+      system_fuel_defaults = @standards_data['regional_fuel_use'].detect {|fuel_sources| fuel_sources['state_province_regions'].include?('BC')}
       raise("Could not find fuel sources for weather file, make sure it is a Canadian weather file.") if fuel_sources.nil? #this should never happen
 
     when 'NaturalGas'
-      fuel_sources = @standards_data['regional_fuel_use'].detect {|fuel_sources| fuel_sources['state_province_regions'].include?('AB')}
+      system_fuel_defaults = @standards_data['regional_fuel_use'].detect {|fuel_sources| fuel_sources['state_province_regions'].include?('AB')}
       raise("Could not find fuel sources for weather file, make sure it is a Canadian weather file.") if fuel_sources.nil? #this should never happen
 
     when 'FuelOil#2'
-      fuel_sources = @standards_data['regional_fuel_use'].detect {|fuel_sources| fuel_sources['state_province_regions'].include?('NT')}
+      system_fuel_defaults = @standards_data['regional_fuel_use'].detect {|fuel_sources| fuel_sources['state_province_regions'].include?('NT')}
       raise("Could not find fuel sources for weather file, make sure it is a Canadian weather file.") if fuel_sources.nil? #this should never happen
     else
       system_fuel_defaults = get_canadian_system_defaults_by_weatherfile_name(model)
