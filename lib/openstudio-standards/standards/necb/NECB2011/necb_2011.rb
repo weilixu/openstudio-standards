@@ -197,7 +197,6 @@ class NECB2011 < Standard
   # Created this method so that additional methods can be addded for bulding the prototype model in later
   # code versions without modifying the build_protoype_model method or copying it wholesale for a few changes.
   def model_apply_standard(model:, epw_file:, debug: false, sizing_run_dir: Dir.pwd, new_auto_zoner: true, dominant_heating_fuel: nil)
-    @climate_zone = 'NECB HDD Method'
     standard_loads(epw_file: epw_file, model: model)
     standard_zoning(model: model, sizing_run_dir: sizing_run_dir)
     standard_systems(model: model, sizing_run_dir: sizing_run_dir, dominant_heating_fuel: 'default')
