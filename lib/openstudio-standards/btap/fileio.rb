@@ -1189,7 +1189,8 @@ module BTAP
       new_number_of_objects = new_model.getModelObjects.length
 
       puts "Number of objects removed: #{old_number_of_objects - new_number_of_objects}"
-      return new_model
+      model =  new_model
+      return model
     end
 
   end #FileIO

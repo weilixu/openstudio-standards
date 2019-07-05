@@ -328,7 +328,7 @@ class NECB2011
   # Some expections are dwelling units wet zone and wild zones.  These spaces will have special considerations when autozoning a
   # building.
 
-  def auto_zoning(model:, sizing_run_dir: Dir.pwd)
+  def standard_zoning(model:, sizing_run_dir: Dir.pwd)
     # The first thing we need to do is get a sizing run to determine the heating loads of all the spaces. The default
     # btap geometry has a one to one relationship of zones to spaces.. So we simply create the thermal zones for all the spaces.
     # to do this we need to create thermals zone for each space.
@@ -423,6 +423,7 @@ class NECB2011
                                  mau_heating_coil_type: mau_heating_coil_type,
                                  mau_type: mau_type
     )
+
   end
 
   # Method to store space sizing loads. This is needed because later when the zones are destroyed this information will be lost.

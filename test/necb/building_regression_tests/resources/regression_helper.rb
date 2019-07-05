@@ -134,7 +134,9 @@ class NECBRegressionHelper < Minitest::Test
     test = File.new(test_qaqc_file, 'r')
     expected = File.new(expected_qaqc_file, 'r')
     diffs = JsonCompare.get_diff(Yajl::Parser.parse(expected), Yajl::Parser.parse(test))
-    if diffs.empty?
+    # Pass is diff is empty or the standards revision is the only change.
+    puts diffs
+    if diffs.empty? || (diffs[:update].keys.size == 1 and diffs[:update].key?("os_standards_revision"))
       return true
     else
       puts "qaqc has differences."

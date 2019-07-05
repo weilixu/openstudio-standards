@@ -177,7 +177,8 @@ class NECB2011 < Standard
                                    epw_file:,
                                    debug: false,
                                    sizing_run_dir: Dir.pwd,
-                                   new_auto_zoner: true
+                                   new_auto_zoner: true,
+                                   dominant_heating_fuel: nil
 
   )
     osm_model_path = File.absolute_path(File.join(__FILE__, '..', '..', '..', "necb/NECB2011/data/geometry/#{building_type}.osm"))
@@ -187,23 +188,24 @@ class NECB2011 < Standard
     return model_apply_standard(model: model,
                                 epw_file: epw_file,
                                 sizing_run_dir: sizing_run_dir,
-                                new_auto_zoner: new_auto_zoner)
+                                new_auto_zoner: new_auto_zoner,
+                                dominant_heating_fuel: dominant_heating_fuel
+    )
   end
 
 
   # Created this method so that additional methods can be addded for bulding the prototype model in later
   # code versions without modifying the build_protoype_model method or copying it wholesale for a few changes.
-  def model_apply_standard(model:, epw_file:, debug: false, sizing_run_dir: Dir.pwd, new_auto_zoner: true)
+  def model_apply_standard(model:, epw_file:, debug: false, sizing_run_dir: Dir.pwd, new_auto_zoner: true, dominant_heating_fuel: nil)
     @climate_zone = 'NECB HDD Method'
-    standard_loads(epw_file, model)
-    #Zone the model according to rules. This will invoke another sizing run.
-    auto_zoning(model: model, sizing_run_dir: sizing_run_dir)
-    standard_hvac(model, sizing_run_dir)
-    standard_plant(debug, model, sizing_run_dir)
+    standard_loads(epw_file: epw_file, model: model)
+    standard_zoning(model: model, sizing_run_dir: sizing_run_dir)
+    standard_systems(model: model, sizing_run_dir: sizing_run_dir, dominant_heating_fuel: 'default')
+    model = standard_plant(debug: debug, model: model, sizing_run_dir: sizing_run_dir)
     return model
   end
 
-  def standard_plant(debug, model, sizing_run_dir)
+  def standard_plant(debug:, model:, sizing_run_dir:)
     #Do a second sizing run for the plant and loops.
     if model_run_sizing_run(model, "#{sizing_run_dir}/SR1") == false
       raise("sizing run 1 failed! check #{sizing_run_dir}")
@@ -213,21 +215,33 @@ class NECB2011 < Standard
     # Apply the prototype HVAC assumptions
     # which include sizing the fan pressure rises based
     # on the flow rate of the system.
-    model_apply_prototype_hvac_assumptions(model, nil, @climate_zone)
+    model_apply_prototype_hvac_assumptions(model, nil, 'NECB HDD Method')
 
     # Apply the HVAC efficiency standard
-    model_apply_hvac_efficiency_standard(model, @climate_zone)
+    model_apply_hvac_efficiency_standard(model, 'NECB HDD Method')
     # Fix EMS references.
     # Temporary workaround for OS issue #2598
     model_temp_fix_ems_references(model)
 
     # Add output variables for debugging
     model_request_timeseries_outputs(model) if debug
+    return model
   end
 
-  def standard_hvac(model, sizing_run_dir)
+  def standard_systems(model:, sizing_run_dir:, dominant_heating_fuel: nil)
+    fuel_sources = nil
+    case dominant_heating_fuel
+    when 'Electricity'
+      fuel_sources = @standards_data['regional_fuel_use'].detect {|fuel_sources| fuel_sources['state_province_regions'].include?('BC')}
+      raise("Could not find fuel sources for weather file, make sure it is a Canadian weather file.") if fuel_sources.nil? #this should never happen
 
-    system_fuel_defaults = get_canadian_system_defaults_by_weatherfile_name(model)
+    when 'NaturalGas'
+      fuel_sources = @standards_data['regional_fuel_use'].detect {|fuel_sources| fuel_sources['state_province_regions'].include?('AB')}
+      raise("Could not find fuel sources for weather file, make sure it is a Canadian weather file.") if fuel_sources.nil? #this should never happen
+    else
+      system_fuel_defaults = get_canadian_system_defaults_by_weatherfile_name(model)
+    end
+
     auto_system(model: model,
                 boiler_fueltype: system_fuel_defaults['boiler_fueltype'],
                 baseboard_type: system_fuel_defaults['baseboard_type'],
@@ -242,19 +256,23 @@ class NECB2011 < Standard
     random = Random.new(1234)
     model.getThermalZones.sort.each {|item| item.setRenderingColor(self.set_random_rendering_color(item, random))}
     model.getSpaceTypes.sort.each {|item| item.setRenderingColor(self.set_random_rendering_color(item, random))}
-
+    # Add SHW system based on space loads
     model_add_swh(model)
-    model_apply_sizing_parameters(model)
+  end
+
+  def standard_loads(epw_file:, model:)
+    loads_sucessful = false
+    building_type = model.getBuilding.standardsBuildingType.empty? ? "unknown" : model.getBuilding.standardsBuildingType.get
+    model.getBuilding.setStandardsBuildingType("#{self.class.name}_#{building_type}")
 
     # set a larger tolerance for unmet hours from default 0.2 to 1.0C
     model.getOutputControlReportingTolerances.setToleranceforTimeHeatingSetpointNotMet(1.0)
     model.getOutputControlReportingTolerances.setToleranceforTimeCoolingSetpointNotMet(1.0)
-  end
+    # Set Sizing Factors
+    model.getSizingParameters.setHeatingSizingFactor(self.get_standards_constant('sizing_factor_max_heating'))
+    model.getSizingParameters.setCoolingSizingFactor(self.get_standards_constant('sizing_factor_max_cooling'))
+    OpenStudio.logFree(OpenStudio::Info, 'openstudio.prototype.Model', "Set sizing factors to #{self.get_standards_constant('sizing_factor_max_heating')} for heating and #{self.get_standards_constant('sizing_factor_max_heating')} for cooling.")
 
-  def standard_loads(epw_file, model)
-    loads_sucessful = false
-    building_type = model.getBuilding.standardsBuildingType.empty? ? "unknown" : model.getBuilding.standardsBuildingType.get
-    model.getBuilding.setStandardsBuildingType("#{self.class.name}_#{building_type}")
 
     # Ensure that the space types names match the space types names in the code.
     if validate_initial_model(model) and validate_space_types(model)
