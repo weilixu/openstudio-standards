@@ -201,7 +201,7 @@ class NECB2011 < Standard
     standard_loads(epw_file: epw_file, model: model)
     standard_zoning(model: model, sizing_run_dir: sizing_run_dir)
     standard_systems(model: model, sizing_run_dir: sizing_run_dir, dominant_heating_fuel: 'default')
-    model = standard_plant(debug: debug, model: model, sizing_run_dir: sizing_run_dir)
+    standard_plant(debug: debug, model: model, sizing_run_dir: sizing_run_dir)
     return model
   end
 
