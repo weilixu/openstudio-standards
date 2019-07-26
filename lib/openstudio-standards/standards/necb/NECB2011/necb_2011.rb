@@ -197,9 +197,14 @@ class NECB2011 < Standard
   # Created this method so that additional methods can be addded for bulding the prototype model in later
   # code versions without modifying the build_protoype_model method or copying it wholesale for a few changes.
   def model_apply_standard(model:, epw_file:, debug: false, sizing_run_dir: Dir.pwd, new_auto_zoner: true, dominant_heating_fuel: nil)
+    # This method will set the items that influence the loads on the model.. Constructions, FDWR/SRR, SpaceType Schedules, Infiltration.
     standard_loads(epw_file: epw_file, model: model)
+    # This will automatically set up the zones in the model consistently following rules from the NECB spacetypes and from the EE4 modelling manual.
     standard_zoning(model: model, sizing_run_dir: sizing_run_dir)
+    # This will set up the systems based on the spacetypes and the NECB system mappings. Systems (1-8)
+    # The optional argument dominant fuel will override the provincial heating fuel type defaults if requested.
     standard_systems(model: model, sizing_run_dir: sizing_run_dir, dominant_heating_fuel: 'default')
+    # This will set up the default hvac system and plant performance according to the NECB.
     standard_plant(debug: debug, model: model, sizing_run_dir: sizing_run_dir)
     return model
   end
