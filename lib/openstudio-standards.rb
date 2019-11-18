@@ -51,10 +51,14 @@ module OpenstudioStandards
   require_relative "#{stds}/necb/NECB2017/necb_2017"
   require_relative "#{stds}/necb/NECB2017/hvac_systems"
 
+  # BTAPPRE1980
+  require_relative "#{stds}/necb/BTAPPRE1980/btap_pre1980"
+
+
   # NECB QAQC
   require_relative "#{stds}/necb/NECB2011/qaqc/necb_qaqc.rb"
   require_relative "#{stds}/necb/NECB2015/qaqc/necb_2015_qaqc.rb"
-  
+
   require_relative "#{stds}/ashrae_90_1/ashrae_90_1"
   require_relative "#{stds}/ashrae_90_1/doe_ref_pre_1980/doe_ref_pre_1980"
   require_relative "#{stds}/ashrae_90_1/doe_ref_1980_2004/doe_ref_1980_2004"
@@ -76,7 +80,7 @@ module OpenstudioStandards
   require_relative "#{stds}/deer/deer_2017/deer_2017"
 
   require_relative "#{stds}/oeesc/oeesc"
-  require_relative "#{stds}/oeesc/oeesc_2014/oeesc_2014"  
+  require_relative "#{stds}/oeesc/oeesc_2014/oeesc_2014"
 
   require_relative "#{stds}/icc_iecc/icc_iecc"
   require_relative "#{stds}/icc_iecc/icc_iecc_2015/icc_iecc_2015"
@@ -346,8 +350,8 @@ module OpenstudioStandards
     #bundle_gemfile = ENV['BUNDLE_GEMFILE']
     #bundle_path = ENV['BUNDLE_PATH']
     #if bundle_gemfile.nil? || bundle_path.nil?
-      new_env['BUNDLE_GEMFILE'] = nil
-      new_env['BUNDLE_PATH'] = nil
+    new_env['BUNDLE_GEMFILE'] = nil
+    new_env['BUNDLE_PATH'] = nil
     #else
     #  new_env['BUNDLE_GEMFILE'] = bundle_gemfile
     #  new_env['BUNDLE_PATH'] = bundle_path
