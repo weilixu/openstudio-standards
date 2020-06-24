@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-reporters'
   spec.add_development_dependency 'minitest-parallel_fork'
   spec.add_development_dependency 'ruby-progressbar'
-  spec.add_development_dependency 'parallel_tests'
+  spec.add_development_dependency 'parallel_tests', '<= 2.32.0'
   if RUBY_VERSION < "2.3"
     spec.add_development_dependency 'nokogiri', '<= 1.6.8.1'
     spec.add_development_dependency 'bundler', '~> 1.9'
