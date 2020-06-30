@@ -820,7 +820,7 @@
       "template": "90.1-2007",
       "building_type": "LargeHotel",
       "hvac_system": null,
-      "geometry_osm": "ASHRAE901LargeHotel.osm",
+      "geometry_osm": "ASHRAELargeHotel.osm",
       "hvac_json": "ASHRAELargeHotel.json",
       "chw_pumping_type": "const_pri_var_sec",
       "chw_number_chillers": null,
