@@ -1048,6 +1048,20 @@ class Standard
           'ASHRAE 169-2013-4A'
         drybulb_limit_f = 65
       end
+
+      # buildings with 2004 and earlier HVAC vintages are assumed to use a lower drybulb limit of 65 F, which is common in older buildings
+      if (template == 'ComStock 90.1-2004' || template == 'ComStock DOE Ref 1980-2004' || template == 'ComStock DOE Ref Pre-1980') #CC-12/31/2020
+        drybulb_limit_f = 65
+        OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "For #{air_loop_hvac.name}: 65 F economizer max temperature limit assumed for 2004 and earlier code years, as is common with older HVAC systems.")
+      else
+        search_criteria = {
+          'template' => template,
+          'climate_zone' => climate_zone
+        }
+        econ_limits = model_find_object(standards_data['economizers'], search_criteria)
+        drybulb_limit_f = econ_limits['fixed_dry_bulb_high_limit_shutoff_temp']
+      end
+
     when 'FixedEnthalpy'
       enthalpy_limit_btu_per_lb = 28
     when 'FixedDewPointAndDryBulb'
@@ -1135,14 +1149,19 @@ class Standard
     minimum_capacity_w = OpenStudio.convert(minimum_capacity_btu_per_hr, 'Btu/hr', 'W').get
     # 6.5.1.3 Integrated Economizer Control
     # Exception a, DX VAV systems
+    OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "Template is: #{template} ----CC")
     if is_vav == true && num_zones_served > 1
       integrated_economizer_required = false
       OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "For #{air_loop_hvac.name}: non-integrated economizer per 6.5.1.3 exception a, DX VAV system.")
       # Exception b, DX units less than 65,000 Btu/hr
+    elsif (template == 'ComStock 90.1-2004' || template == 'ComStock DOE Ref 1980-2004' || template == 'ComStock DOE Ref Pre-1980') #CC-12/31/2020
+      integrated_economizer_required = false
+      OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "For #{air_loop_hvac.name}: non-integrated economizer assumed for 2004 and earlier code years.")
     elsif air_loop_hvac_total_cooling_capacity(air_loop_hvac) < minimum_capacity_w
       integrated_economizer_required = false
       OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "For #{air_loop_hvac.name}: non-integrated economizer per 6.5.1.3 exception b, DX system less than #{minimum_capacity_btu_per_hr}Btu/hr.")
     else
+      OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "FAIL____FAIL___XXXXX____!!!!!!")
       # Exception c, Systems in climate zones 1,2,3a,4a,5a,5b,6,7,8
       case climate_zone
       when 'ASHRAE 169-2006-0A',

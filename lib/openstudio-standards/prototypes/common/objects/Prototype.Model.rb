@@ -1768,7 +1768,8 @@ Standard.class_eval do
   # 'ElectronicEnthalpy'
   # 'DifferentialDryBulbAndEnthalpy'
   def model_economizer_type(model, climate_zone)
-    economizer_type = 'DifferentialDryBulb'
+    economizer_type = 'FixedDryBulb'
+    # economizer_type = 'DifferentialDryBulb' #CC-12/31/2020
     return economizer_type
   end
 

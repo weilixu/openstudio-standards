@@ -26,7 +26,8 @@ class ASHRAE9012010 < ASHRAE901
                           'ASHRAE 169-2013-4A'
                         'DifferentialEnthalpy'
                       else
-                        'DifferentialDryBulb'
+                        'FixedDryBulb'
+                        # 'DifferentialDryBulb' #CC-12/31/2020
                       end
     return economizer_type
   end
