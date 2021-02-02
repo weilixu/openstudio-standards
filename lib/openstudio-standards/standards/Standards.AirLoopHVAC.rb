@@ -983,6 +983,8 @@ class Standard
   # on the AirLoopHVAC, if any.
   # @return [Array<Double>] [drybulb_limit_f, enthalpy_limit_btu_per_lb, dewpoint_limit_f]
   def air_loop_hvac_economizer_limits(air_loop_hvac, climate_zone)
+
+    OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "CHKPT-1")
     drybulb_limit_f = nil
     enthalpy_limit_btu_per_lb = nil
     dewpoint_limit_f = nil
@@ -1001,6 +1003,7 @@ class Standard
     when 'NoEconomizer'
       return [nil, nil, nil]
     when 'FixedDryBulb'
+      OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "CHKPT-2")
       case climate_zone
       when 'ASHRAE 169-2006-0B',
           'ASHRAE 169-2006-1B',
@@ -1054,12 +1057,16 @@ class Standard
         drybulb_limit_f = 65
         OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "For #{air_loop_hvac.name}: 65 F economizer max temperature limit assumed for 2004 and earlier code years, as is common with older HVAC systems.")
       else
+        OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "CHKPT-3")
         search_criteria = {
           'template' => template,
           'climate_zone' => climate_zone
         }
         econ_limits = model_find_object(standards_data['economizers'], search_criteria)
+        OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "CHKPT-3.1: #{drybulb_limit_f.to_s}")
+        OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "CHKPT-3.2: #{econ_limits.to_s}")
         drybulb_limit_f = econ_limits['fixed_dry_bulb_high_limit_shutoff_temp']
+        OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "CHKPT-4: #{drybulb_limit_f.to_s}")
       end
 
     when 'FixedEnthalpy'
@@ -1161,7 +1168,6 @@ class Standard
       integrated_economizer_required = false
       OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "For #{air_loop_hvac.name}: non-integrated economizer per 6.5.1.3 exception b, DX system less than #{minimum_capacity_btu_per_hr}Btu/hr.")
     else
-      OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "FAIL____FAIL___XXXXX____!!!!!!")
       # Exception c, Systems in climate zones 1,2,3a,4a,5a,5b,6,7,8
       case climate_zone
       when 'ASHRAE 169-2006-0A',
