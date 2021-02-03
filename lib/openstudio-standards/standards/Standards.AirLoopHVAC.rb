@@ -1114,6 +1114,10 @@ class Standard
       integrated_economizer_required = false
       OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "For #{air_loop_hvac.name}: non-integrated economizer per 6.5.1.3 exception a, DX VAV system.")
       # Exception b, DX units less than 65,000 Btu/hr
+    elsif (template == 'ComStock 90.1-2004' || template == 'ComStock DOE Ref 1980-2004' || template == 'ComStock DOE Ref Pre-1980') #cmc2021
+      integrated_economizer_required = false
+      OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "For #{air_loop_hvac.name}: non-integrated economizer assumed for 2004 and earlier code years.")
+      # for comstock Washington State work. Assuming buildings 2004 and earlier do not have integrated economizers
     elsif air_loop_hvac_total_cooling_capacity(air_loop_hvac) < minimum_capacity_w
       integrated_economizer_required = false
       OpenStudio.logFree(OpenStudio::Info, 'openstudio.standards.AirLoopHVAC', "For #{air_loop_hvac.name}: non-integrated economizer per 6.5.1.3 exception b, DX system less than #{minimum_capacity_btu_per_hr}Btu/hr.")
