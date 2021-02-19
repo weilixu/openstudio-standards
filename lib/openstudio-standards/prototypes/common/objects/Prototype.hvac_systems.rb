@@ -2551,6 +2551,12 @@ class Standard
         clg_coil = nil
       end
 
+      # invalid fan location
+      if fan_location != 'DrawThrough' || fan_location != 'BlowThrough'
+        OpenStudio.logFree(OpenStudio::Error, 'openstudio.model.Model', 'Invalid fan location')
+        return false
+      end
+
       # cycling fan
       if fan_type == 'Cycling'
         # Use a Fan:OnOff in the unitary system object
@@ -2558,16 +2564,12 @@ class Standard
                                  'Packaged_RTU_SZ_AC_Cycling_Fan',
                                  fan_name: "#{air_loop.name} Fan")
       # cav on/off fan
-      elsif heating_type == 'Single Speed Heat Pump' || fan_location == 'DrawThrough' || fan_location == 'BlowThrough'
+      else
         # Use a Fan:OnOff in the unitary system object
         fan = create_fan_by_name(model,
                                  'Packaged_RTU_SZ_AC_CAV_OnOff_Fan',
                                  fan_name: "#{air_loop.name} Fan")
         fan.setAvailabilitySchedule(hvac_op_sch)
-      # invalid fan location
-      else
-        OpenStudio.logFree(OpenStudio::Error, 'openstudio.model.Model', 'Invalid fan location')
-        return false
       end
 
       # wrap coils in a unitary system
