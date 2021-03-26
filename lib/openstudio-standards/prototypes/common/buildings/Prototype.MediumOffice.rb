@@ -13,7 +13,7 @@ module MediumOffice
     when '90.1-2010', '90.1-2013'
       transformer_efficiency = 0.977
     when '90.1-2016', '90.1-2019'
-      transformer_efficiency = 0.984
+      transformer_efficiency = 0.977
     else
       transformer_efficiency = nil
     end

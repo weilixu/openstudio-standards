@@ -13,7 +13,7 @@ module LargeHotel
     when '90.1-2010', '90.1-2013'
       transformer_efficiency = 0.983
     when '90.1-2016', '90.1-2019'
-      transformer_efficiency = 0.988
+      transformer_efficiency = 0.983
     else
       transformer_efficiency = nil
     end

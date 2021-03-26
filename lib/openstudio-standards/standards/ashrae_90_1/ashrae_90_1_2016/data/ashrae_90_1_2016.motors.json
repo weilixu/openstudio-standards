@@ -1,7 +1,7 @@
 {
   "motors": [
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -11,7 +11,7 @@
       "notes": "Motors below 1/12 HP assumed to be PSC, with average typical efficiency of 29% per PNNL"
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -21,7 +21,7 @@
       "notes": "Motors between 1/12 and 1 HP must be EC, with minimum efficiency of 70% per PNNL"
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -31,7 +31,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -41,7 +41,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -51,7 +51,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -61,7 +61,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -71,7 +71,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -81,7 +81,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -91,7 +91,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -101,7 +101,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -111,7 +111,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -121,7 +121,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -131,7 +131,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -141,7 +141,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -151,7 +151,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -161,7 +161,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -171,7 +171,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -181,7 +181,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -191,7 +191,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -201,7 +201,7 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
@@ -211,63 +211,63 @@
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
       "minimum_capacity": 250.0,
       "maximum_capacity": 299.999,
-      "nominal_full_load_efficiency": 0.962,
+      "nominal_full_load_efficiency": 0.95,
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
       "minimum_capacity": 300.0,
       "maximum_capacity": 349.999,
-      "nominal_full_load_efficiency": 0.962,
+      "nominal_full_load_efficiency": 0.954,
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
       "minimum_capacity": 350.0,
       "maximum_capacity": 399.999,
-      "nominal_full_load_efficiency": 0.962,
+      "nominal_full_load_efficiency": 0.954,
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
       "minimum_capacity": 400.0,
       "maximum_capacity": 449.999,
-      "nominal_full_load_efficiency": 0.962,
+      "nominal_full_load_efficiency": 0.954,
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
       "minimum_capacity": 450.0,
       "maximum_capacity": 499.999,
-      "nominal_full_load_efficiency": 0.962,
+      "nominal_full_load_efficiency": 0.954,
       "notes": null
     },
     {
-      "template": "90.1-2016",
+      "template": "90.1-2013",
       "number_of_poles": 4.0,
       "type": "Enclosed",
       "synchronous_speed": 1800.0,
       "minimum_capacity": 500.0,
       "maximum_capacity": 9999.0,
-      "nominal_full_load_efficiency": 0.962,
+      "nominal_full_load_efficiency": 0.954,
       "notes": null
     }
   ]

@@ -18,7 +18,7 @@ module HighriseApartment
     when '90.1-2010', '90.1-2013'
       transformer_efficiency = 0.98
     when '90.1-2016', '90.1-2019'
-      transformer_efficiency = 0.986
+      transformer_efficiency = 0.98
     else
       transformer_efficiency = nil
     end

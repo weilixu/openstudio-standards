@@ -13,7 +13,7 @@ module Hospital
     when '90.1-2010', '90.1-2013'
       transformer_efficiency = 0.987
     when '90.1-2016', '90.1-2019'
-      transformer_efficiency = 0.991
+      transformer_efficiency = 0.987
     else
       transformer_efficiency = nil
     end
